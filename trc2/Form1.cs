@@ -54,7 +54,6 @@ namespace trc2
 
             try
             {
-
                 tatc = new TwitterModelClass(AppAccessToken, AppAccessTokenSecret, UserAccessToken, UserAccessTokenSecret);
 
                 TwitterResponse<TwitterStatusCollection> pTimeline
@@ -65,7 +64,32 @@ namespace trc2
                 {
                     listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status));
                 }
-            }
+                /*
+                stream.StartUserStream(
+                    null,
+                    null,
+                    new StatusCreatedCallback((TwitterStatus ts) =>
+                    {
+                        ListViewItem tm = tv.GetListViewItemFromTwitterStatusWithSound(ts);
+                        lv.Invoke((MethodInvoker)delegate
+                        {
+                            lv.Items.Add(tm);
+                        });
+                        if (tm.ImageIndex == 2)
+                        {
+                            mlv.Invoke((MethodInvoker)delegate
+                            {
+                                mlv.Items.Add(tv.GetListViewItemFromTwitterStatus(ts));
+                            });
+                        }
+                    }
+                        ),
+                    null,
+                    null,
+                    null,
+                    null
+                );
+*/            }
             catch (Exception exp)
             {
                 MessageBox.Show(exp.Message);
@@ -84,6 +108,8 @@ namespace trc2
                 "https://twitter.com/" + TwitterViewClass.GetScreenName(item));
             TextLabel.Text = TwitterViewClass.GetText(item);
             TextLabel.Links.Clear();
+            TimeLabel.Text = (TwitterViewClass.GetStatusCreatedDate(item)).ToString
+                ("yyyy/MM/dd HH:mm:ss");
 
         }
 

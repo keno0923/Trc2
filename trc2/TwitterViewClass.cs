@@ -54,6 +54,12 @@ namespace trc2
             return status.Text;
         }
 
+        public static DateTime GetStatusCreatedDate(ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            return status.CreatedDate;
+        }
+
         public static String GetScreenNamePair(ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;

@@ -35,6 +35,7 @@ namespace trc2
 
         private OAuthTokens tokens = new OAuthTokens();
         private CachedUserData cuData = new CachedUserData();
+        private TwitterStream userStream = null;
 
         public TwitterModelClass(string act, string acts)
         {
@@ -48,11 +49,16 @@ namespace trc2
             tokens.ConsumerSecret = cs;
             TwitterResponse<TwitterUser> response = TwitterAccount.VerifyCredentials(tokens);
             UtilityClass.CheckResult(response.Result, response.ErrorMessage);
+            userStream = new TwitterStream(tokens, "beta", new StreamOptions());
         }
 
         public void RefreshCache()
         {
             cuData.Clear();
+        }
+
+        public void StartUserStream()
+        {
         }
 
         public UserIdCollection FollowerID
