@@ -24,6 +24,7 @@
 *.lib
 *.sbr
 *.sdf
+*.pass
 ipch/
 obj/
 [Bb]in
