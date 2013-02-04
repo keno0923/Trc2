@@ -57,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtendedTwitterUser.cs" />
+    <Compile Include="ITwitterViewerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TwitterViewClass.cs" />
     <Compile Include="UtilityClass.cs" />
     <Compile Include="TwitterControllerClass.cs" />

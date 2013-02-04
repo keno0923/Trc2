@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using Twitterizer;
 using Twitterizer.Streaming;
+using System.Windows.Forms;
 
 namespace trc2
 {
     class TwitterModelClass
     {
+        TwitterViewerForm parentForm = null;
+
         class CachedUserData
         {
             private UserIdCollection followerID = new UserIdCollection();
@@ -37,11 +40,7 @@ namespace trc2
         private CachedUserData cuData = new CachedUserData();
         private TwitterStream userStream = null;
 
-        public TwitterModelClass(string act, string acts)
-        {
-        }
-            
-        public TwitterModelClass(string act, string acts, string ck, string cs)
+        public TwitterModelClass(string act, string acts, string ck, string cs, TwitterViewerForm form )
         {
             tokens.AccessToken = act;
             tokens.AccessTokenSecret = acts;
@@ -50,6 +49,24 @@ namespace trc2
             TwitterResponse<TwitterUser> response = TwitterAccount.VerifyCredentials(tokens);
             UtilityClass.CheckResult(response.Result, response.ErrorMessage);
             userStream = new TwitterStream(tokens, "beta", new StreamOptions());
+            parentForm = form;
+
+            userStream.StartUserStream(
+                null,
+                null,
+                new StatusCreatedCallback((TwitterStatus ts) =>
+                {
+                    parentForm.Invoke((MethodInvoker)delegate
+                    {
+                        ((Form1)parentForm).InvokedTwitterStatus(ts);
+                    });
+                }
+                    ),
+                null,
+                null,
+                null,
+                null
+            );
         }
 
         public void RefreshCache()

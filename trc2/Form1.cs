@@ -11,9 +11,15 @@ using System.IO;
 
 namespace trc2
 {
-    public partial class Form1 : Form
+    public partial class Form1 : TwitterViewerForm
     {
         TwitterModelClass tatc = null;
+        List<ListView> listViewList = new List<ListView>();
+
+        new public void InvokedTwitterStatus(TwitterStatus status)
+        {
+            listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status));
+        }
 
         public Form1()
         {
@@ -54,7 +60,9 @@ namespace trc2
 
             try
             {
-                tatc = new TwitterModelClass(AppAccessToken, AppAccessTokenSecret, UserAccessToken, UserAccessTokenSecret);
+                tatc = new TwitterModelClass(AppAccessToken, AppAccessTokenSecret,
+                    UserAccessToken, UserAccessTokenSecret,
+                    this );
 
                 TwitterResponse<TwitterStatusCollection> pTimeline
                     = TwitterTimeline.HomeTimeline(tatc.Token);
@@ -64,32 +72,8 @@ namespace trc2
                 {
                     listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status));
                 }
-                /*
-                stream.StartUserStream(
-                    null,
-                    null,
-                    new StatusCreatedCallback((TwitterStatus ts) =>
-                    {
-                        ListViewItem tm = tv.GetListViewItemFromTwitterStatusWithSound(ts);
-                        lv.Invoke((MethodInvoker)delegate
-                        {
-                            lv.Items.Add(tm);
-                        });
-                        if (tm.ImageIndex == 2)
-                        {
-                            mlv.Invoke((MethodInvoker)delegate
-                            {
-                                mlv.Items.Add(tv.GetListViewItemFromTwitterStatus(ts));
-                            });
-                        }
-                    }
-                        ),
-                    null,
-                    null,
-                    null,
-                    null
-                );
-*/            }
+                listViewList.Add(listView1);
+            }
             catch (Exception exp)
             {
                 MessageBox.Show(exp.Message);
