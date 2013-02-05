@@ -15,10 +15,11 @@ namespace trc2
     {
         TwitterModelClass tatc = null;
         List<ListView> listViewList = new List<ListView>();
+        decimal myID = new decimal();
 
         new public void InvokedTwitterStatus(TwitterStatus status)
         {
-            listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status));
+            listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status, myID));
         }
 
         public Form1()
@@ -26,8 +27,11 @@ namespace trc2
             InitializeComponent();
         }
 
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            listViewList.Add(listView1);
+
             StreamReader srApp = null;
             String AppAccessToken = null;
             String AppAccessTokenSecret = null;
@@ -68,9 +72,11 @@ namespace trc2
                     = TwitterTimeline.HomeTimeline(tatc.Token);
                 UtilityClass.CheckResult(pTimeline.Result, pTimeline.ErrorMessage);
 
+                myID = tatc.myID;
+
                 foreach (TwitterStatus status in pTimeline.ResponseObject)
                 {
-                    listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status));
+                    listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status, myID));
                 }
                 listViewList.Add(listView1);
             }

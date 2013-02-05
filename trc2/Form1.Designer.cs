@@ -28,19 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.listView1 = new System.Windows.Forms.ListView();
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.UserName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColumnText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InReplyTo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.iconList = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.TimeLabel = new System.Windows.Forms.Label();
             this.TextLabel = new System.Windows.Forms.LinkLabel();
             this.ScreenNameLabel = new System.Windows.Forms.LinkLabel();
             this.UserImageBox = new System.Windows.Forms.PictureBox();
-            this.TimeLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -61,6 +64,7 @@
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(739, 364);
+            this.listView1.SmallImageList = this.iconList;
             this.listView1.Sorting = System.Windows.Forms.SortOrder.Descending;
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -70,7 +74,7 @@
             // ID
             // 
             this.ID.Text = "ID";
-            this.ID.Width = 0;
+            this.ID.Width = 20;
             // 
             // UserName
             // 
@@ -85,6 +89,15 @@
             // InReplyTo
             // 
             this.InReplyTo.Text = "InReplyTo";
+            // 
+            // iconList
+            // 
+            this.iconList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("iconList.ImageStream")));
+            this.iconList.TransparentColor = System.Drawing.Color.Transparent;
+            this.iconList.Images.SetKeyName(0, "blue.png");
+            this.iconList.Images.SetKeyName(1, "green.png");
+            this.iconList.Images.SetKeyName(2, "pink.png");
+            this.iconList.Images.SetKeyName(3, "red.png");
             // 
             // tabControl1
             // 
@@ -133,6 +146,17 @@
             this.panel1.Size = new System.Drawing.Size(752, 105);
             this.panel1.TabIndex = 2;
             // 
+            // TimeLabel
+            // 
+            this.TimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TimeLabel.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.TimeLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.TimeLabel.Location = new System.Drawing.Point(603, 11);
+            this.TimeLabel.Name = "TimeLabel";
+            this.TimeLabel.Size = new System.Drawing.Size(149, 18);
+            this.TimeLabel.TabIndex = 3;
+            this.TimeLabel.Text = "0000/00/00 00:00:00";
+            // 
             // TextLabel
             // 
             this.TextLabel.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -169,17 +193,6 @@
             this.UserImageBox.TabIndex = 0;
             this.UserImageBox.TabStop = false;
             // 
-            // TimeLabel
-            // 
-            this.TimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TimeLabel.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.TimeLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.TimeLabel.Location = new System.Drawing.Point(603, 11);
-            this.TimeLabel.Name = "TimeLabel";
-            this.TimeLabel.Size = new System.Drawing.Size(149, 18);
-            this.TimeLabel.TabIndex = 3;
-            this.TimeLabel.Text = "0000/00/00 00:00:00";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -215,6 +228,7 @@
         private System.Windows.Forms.LinkLabel ScreenNameLabel;
         private System.Windows.Forms.LinkLabel TextLabel;
         private System.Windows.Forms.Label TimeLabel;
+        private System.Windows.Forms.ImageList iconList;
     }
 }
 

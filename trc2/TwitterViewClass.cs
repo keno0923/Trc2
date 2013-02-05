@@ -16,7 +16,7 @@ namespace trc2
     {
         static Dictionary<String, Bitmap> cachedUserImage = new Dictionary<string, Bitmap>();
  
-        public static ListViewItem GetRecordByStatus(TwitterStatus status)
+        public static ListViewItem GetRecordByStatus(TwitterStatus status, decimal myID)
         {
             ListViewItem item = new ListViewItem();
             item.Text = status.StringId;
@@ -24,6 +24,10 @@ namespace trc2
             item.SubItems.Add(status.Text);
             item.SubItems.Add(status.InReplyToStatusId.ToString());
             item.Tag = status;
+            if (status.InReplyToUserId == myID) item.ImageIndex = 0;
+            else if (status.RetweetedStatus != null) item.ImageIndex = 1;
+
+
             return item;
         }
 

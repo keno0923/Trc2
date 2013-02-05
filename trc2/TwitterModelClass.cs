@@ -46,8 +46,6 @@ namespace trc2
             tokens.AccessTokenSecret = acts;
             tokens.ConsumerKey = ck;
             tokens.ConsumerSecret = cs;
-            TwitterResponse<TwitterUser> response = TwitterAccount.VerifyCredentials(tokens);
-            UtilityClass.CheckResult(response.Result, response.ErrorMessage);
             userStream = new TwitterStream(tokens, "beta", new StreamOptions());
             parentForm = form;
 
@@ -97,6 +95,24 @@ namespace trc2
             get
             {
                 return tokens;
+            }
+        }
+
+        public TwitterUser Me
+        {
+            get
+            {
+                TwitterResponse<TwitterUser> response = TwitterAccount.VerifyCredentials(tokens);
+                UtilityClass.CheckResult(response.Result, response.ErrorMessage);
+                return response.ResponseObject;
+            }
+        }
+
+        public decimal myID
+        {
+            get
+            {
+                 return Me.Id;
             }
         }
     }
