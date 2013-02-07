@@ -34,7 +34,6 @@
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.UserName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColumnText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.InReplyTo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.iconList = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -55,8 +54,7 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
             this.UserName,
-            this.ColumnText,
-            this.InReplyTo});
+            this.ColumnText});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.listView1.FullRowSelect = true;
@@ -84,11 +82,7 @@
             // ColumnText
             // 
             this.ColumnText.Text = "ColumnText";
-            this.ColumnText.Width = 600;
-            // 
-            // InReplyTo
-            // 
-            this.InReplyTo.Text = "InReplyTo";
+            this.ColumnText.Width = 1200;
             // 
             // iconList
             // 
@@ -159,11 +153,14 @@
             // 
             // TextLabel
             // 
+            this.TextLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextLabel.AutoEllipsis = true;
             this.TextLabel.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.TextLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.TextLabel.Location = new System.Drawing.Point(98, 36);
             this.TextLabel.Name = "TextLabel";
-            this.TextLabel.Size = new System.Drawing.Size(654, 55);
+            this.TextLabel.Size = new System.Drawing.Size(600, 55);
             this.TextLabel.TabIndex = 2;
             // 
             // ScreenNameLabel
@@ -224,7 +221,6 @@
         private System.Windows.Forms.ColumnHeader ColumnText;
         private System.Windows.Forms.PictureBox UserImageBox;
         private System.Windows.Forms.ColumnHeader UserName;
-        private System.Windows.Forms.ColumnHeader InReplyTo;
         private System.Windows.Forms.LinkLabel ScreenNameLabel;
         private System.Windows.Forms.LinkLabel TextLabel;
         private System.Windows.Forms.Label TimeLabel;

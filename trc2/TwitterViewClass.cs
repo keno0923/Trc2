@@ -22,7 +22,6 @@ namespace trc2
             item.Text = status.StringId;
             item.SubItems.Add(status.User.ScreenName);
             item.SubItems.Add(status.Text);
-            item.SubItems.Add(status.InReplyToStatusId.ToString());
             item.Tag = status;
             if (status.InReplyToUserId == myID) item.ImageIndex = 0;
             else if (status.RetweetedStatus != null) item.ImageIndex = 1;
