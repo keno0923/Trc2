@@ -39,13 +39,16 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.RTUserImageBox = new System.Windows.Forms.PictureBox();
             this.TimeLabel = new System.Windows.Forms.Label();
             this.TextLabel = new System.Windows.Forms.LinkLabel();
             this.ScreenNameLabel = new System.Windows.Forms.LinkLabel();
             this.UserImageBox = new System.Windows.Forms.PictureBox();
+            this.RTScreenLabel = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RTUserImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UserImageBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,7 +64,7 @@
             this.listView1.Location = new System.Drawing.Point(3, 3);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(739, 364);
+            this.listView1.Size = new System.Drawing.Size(739, 345);
             this.listView1.SmallImageList = this.iconList;
             this.listView1.Sorting = System.Windows.Forms.SortOrder.Descending;
             this.listView1.TabIndex = 0;
@@ -100,29 +103,29 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(0, 111);
+            this.tabControl1.Location = new System.Drawing.Point(0, 129);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(753, 395);
+            this.tabControl1.Size = new System.Drawing.Size(753, 377);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.listView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 21);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(745, 370);
+            this.tabPage1.Size = new System.Drawing.Size(745, 351);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 21);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(745, 370);
+            this.tabPage2.Size = new System.Drawing.Size(745, 351);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -130,6 +133,8 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.RTScreenLabel);
+            this.panel1.Controls.Add(this.RTUserImageBox);
             this.panel1.Controls.Add(this.TimeLabel);
             this.panel1.Controls.Add(this.TextLabel);
             this.panel1.Controls.Add(this.ScreenNameLabel);
@@ -137,8 +142,21 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(752, 105);
+            this.panel1.Size = new System.Drawing.Size(752, 123);
             this.panel1.TabIndex = 2;
+            // 
+            // RTUserImageBox
+            // 
+            this.RTUserImageBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.RTUserImageBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.RTUserImageBox.Location = new System.Drawing.Point(11, 97);
+            this.RTUserImageBox.Name = "RTUserImageBox";
+            this.RTUserImageBox.Size = new System.Drawing.Size(20, 20);
+            this.RTUserImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.RTUserImageBox.TabIndex = 4;
+            this.RTUserImageBox.TabStop = false;
+            this.RTUserImageBox.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // TimeLabel
             // 
@@ -180,8 +198,6 @@
             // 
             // UserImageBox
             // 
-            this.UserImageBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.UserImageBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.UserImageBox.Location = new System.Drawing.Point(11, 11);
             this.UserImageBox.Name = "UserImageBox";
@@ -189,6 +205,20 @@
             this.UserImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.UserImageBox.TabIndex = 0;
             this.UserImageBox.TabStop = false;
+            // 
+            // RTScreenLabel
+            // 
+            this.RTScreenLabel.AutoSize = true;
+            this.RTScreenLabel.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.RTScreenLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.RTScreenLabel.LinkColor = System.Drawing.Color.Black;
+            this.RTScreenLabel.Location = new System.Drawing.Point(37, 102);
+            this.RTScreenLabel.Name = "RTScreenLabel";
+            this.RTScreenLabel.Size = new System.Drawing.Size(79, 15);
+            this.RTScreenLabel.TabIndex = 5;
+            this.RTScreenLabel.TabStop = true;
+            this.RTScreenLabel.Text = "linkLabel1";
+            this.RTScreenLabel.VisitedLinkColor = System.Drawing.Color.Black;
             // 
             // Form1
             // 
@@ -205,6 +235,7 @@
             this.tabPage1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RTUserImageBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UserImageBox)).EndInit();
             this.ResumeLayout(false);
 
@@ -225,6 +256,8 @@
         private System.Windows.Forms.LinkLabel TextLabel;
         private System.Windows.Forms.Label TimeLabel;
         private System.Windows.Forms.ImageList iconList;
+        private System.Windows.Forms.PictureBox RTUserImageBox;
+        private System.Windows.Forms.LinkLabel RTScreenLabel;
     }
 }
 

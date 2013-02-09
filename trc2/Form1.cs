@@ -37,7 +37,7 @@ namespace trc2
             String AppAccessTokenSecret = null;
 
             try {
-                srApp = new StreamReader("../../dataapp.pass", Encoding.Default);
+                srApp = new StreamReader("../../datauser.pass", Encoding.Default);
                 AppAccessToken = srApp.ReadLine();
                 AppAccessTokenSecret = srApp.ReadLine();
             }
@@ -52,7 +52,7 @@ namespace trc2
             String UserAccessTokenSecret = null;
             try
             {
-                srUser = new StreamReader("../../datauser.pass", Encoding.Default);
+                srUser = new StreamReader("../../dataapp.pass", Encoding.Default);
                 UserAccessToken = srUser.ReadLine();
                 UserAccessTokenSecret = srUser.ReadLine();
             }
@@ -92,10 +92,26 @@ namespace trc2
                 return;
             ListViewItem item = listView1.SelectedItems[0];
             UserImageBox.Image = TwitterViewClass.GetImageFromListItem(item);
+            RTUserImageBox.Image = TwitterViewClass.GetRTImageFromListItem(item);
+            RTUserImageBox.Visible = (RTUserImageBox.Image != null);
+
             ScreenNameLabel.Text = TwitterViewClass.GetScreenNamePair(item);
             ScreenNameLabel.Links.Clear();
             ScreenNameLabel.Links.Add(0, ScreenNameLabel.Text.Length,
                 "https://twitter.com/" + TwitterViewClass.GetScreenName(item));
+
+            RTScreenLabel.Text = TwitterViewClass.GetRTScreenNamePair(item);
+            if (RTScreenLabel.Text != null)
+            {
+                RTScreenLabel.Visible = true;
+                RTScreenLabel.Links.Clear();
+                RTScreenLabel.Links.Add(0, ScreenNameLabel.Text.Length,
+                    "https://twitter.com/" + TwitterViewClass.GetRTScreenName(item));
+            }
+            else
+            {
+                RTScreenLabel.Visible = false;
+            }
             TextLabel.Text = TwitterViewClass.GetText(item);
             TextLabel.Links.Clear();
             TimeLabel.Text = (TwitterViewClass.GetStatusCreatedDate(item)).ToString
@@ -107,6 +123,11 @@ namespace trc2
         {
             if (e.Link.LinkData != null)
                 System.Diagnostics.Process.Start((String)e.Link.LinkData);
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

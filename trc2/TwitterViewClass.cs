@@ -26,47 +26,87 @@ namespace trc2
             if (status.InReplyToUserId == myID) item.ImageIndex = 0;
             else if (status.RetweetedStatus != null) item.ImageIndex = 1;
 
-
             return item;
+        }
+
+        private static void CacheBitmapFromURL(String URL)
+        {
+            if (!cachedUserImage.ContainsKey(URL))
+            {
+                WebClient wc = new WebClient();
+                Stream stream = wc.OpenRead(URL);
+                cachedUserImage.Add(URL, new Bitmap(stream));
+                stream.Close();
+            }
         }
 
         public static Bitmap GetImageFromListItem(ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
-            String ImageURL = status.User.ProfileImageSecureLocation;
-            if( !cachedUserImage.ContainsKey(ImageURL) )
-            {
-                WebClient wc = new WebClient();
-                Stream stream = wc.OpenRead(ImageURL);
-                cachedUserImage.Add(ImageURL, new Bitmap(stream));
-                stream.Close();
-            }
+            String ImageURL = (status.RetweetedStatus != null) ?
+                status.RetweetedStatus.User.ProfileImageSecureLocation :
+                status.User.ProfileImageSecureLocation;
+            CacheBitmapFromURL(ImageURL);
 
             return cachedUserImage[ImageURL];
+        }
+
+        public static Bitmap GetRTImageFromListItem(ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            if(status.RetweetedStatus != null){
+                String RTImageURL = status.User.ProfileImageSecureLocation;
+                CacheBitmapFromURL(RTImageURL);
+                return cachedUserImage[RTImageURL];
+            }else{
+                return null;
+            }
         }
 
         public static String GetScreenName(ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
-            return status.User.ScreenName;
+            return (status.RetweetedStatus != null) ?
+               status.RetweetedStatus.User.ScreenName :
+               status.User.ScreenName;
+        }
+
+        public static String GetRTScreenName(ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            return (status.RetweetedStatus != null) ?
+                status.User.ScreenName : null;
         }
 
         public static String GetText(ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
-            return status.Text;
+            return (status.RetweetedStatus != null) ?
+              status.RetweetedStatus.Text :
+              status.Text;
         }
 
         public static DateTime GetStatusCreatedDate(ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
-            return status.CreatedDate;
+            return (status.RetweetedStatus != null) ?
+               status.RetweetedStatus.CreatedDate :
+               status.CreatedDate;
         }
 
         public static String GetScreenNamePair(ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
-            return status.User.ScreenName + " / " + status.User.Name;
+            return (status.RetweetedStatus != null) ?
+               status.RetweetedStatus.User.ScreenName + " / " + status.RetweetedStatus.User.Name :
+               status.User.ScreenName + " / " + status.User.Name;
+        }
+
+        public static String GetRTScreenNamePair(ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            return (status.RetweetedStatus != null) ?
+                status.User.ScreenName + " / " + status.User.Name : null;
         }
 
         public static void SetItemColorByFollowedUser(TwitterModelClass tmclass, ListViewItem item)
