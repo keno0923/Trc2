@@ -14,13 +14,21 @@ namespace trc2
 
         class CachedUserData
         {
+            private Decimal? myID = null;
             private UserIdCollection followerID = new UserIdCollection();
             private TwitterUserCollection cachedUser = new TwitterUserCollection();
 
             public void Clear()
             {
+                myID = null;
                 followerID.Clear();
                 cachedUser.Clear();
+            }
+
+            public Decimal? MyID
+            {
+                set { myID = value; }
+                get { return myID; }
             }
 
             public UserIdCollection FollowerID
@@ -84,7 +92,8 @@ namespace trc2
                 {
                     TwitterResponse<UserIdCollection> IDs = TwitterFriendship.FollowersIds(Token);
                     UtilityClass.CheckResult(IDs.Result, IDs.ErrorMessage);
-                    cuData.FollowerID = IDs.ResponseObject; 
+                    cuData.FollowerID = IDs.ResponseObject;
+                    cuData.FollowerID.Add((Decimal)cuData.MyID);
                 }
                 return cuData.FollowerID;
             }
@@ -108,11 +117,13 @@ namespace trc2
             }
         }
 
-        public decimal myID
+        public decimal MyID
         {
             get
             {
-                 return Me.Id;
+                if( cuData.MyID == null )
+                    cuData.MyID = Me.Id;
+                return (decimal)cuData.MyID;
             }
         }
     }

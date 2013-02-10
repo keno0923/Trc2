@@ -56,6 +56,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BufferedListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ExtendedTwitterUser.cs" />
     <Compile Include="ITwitterViewerForm.cs">
       <SubType>Form</SubType>

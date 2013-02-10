@@ -16,15 +16,19 @@ namespace trc2
     {
         static Dictionary<String, Bitmap> cachedUserImage = new Dictionary<string, Bitmap>();
  
-        public static ListViewItem GetRecordByStatus(TwitterStatus status, decimal myID)
+        public static ListViewItem GetRecordByStatus(TwitterStatus status, ref TwitterModelClass tmc)
         {
             ListViewItem item = new ListViewItem();
             item.Text = status.StringId;
             item.SubItems.Add(status.User.ScreenName);
             item.SubItems.Add(status.Text);
             item.Tag = status;
-            if (status.InReplyToUserId == myID) item.ImageIndex = 0;
-            else if (status.RetweetedStatus != null) item.ImageIndex = 1;
+            if (status.InReplyToUserId == tmc.MyID) item.ImageIndex = 0;
+               else if (status.RetweetedStatus != null) item.ImageIndex = 1;
+               else if (status.User.Id == tmc.MyID) item.ImageIndex = 2;
+
+            if (!tmc.FollowerID.Contains(status.User.Id))
+                item.ForeColor = Color.Blue;
 
             return item;
         }

@@ -13,13 +13,12 @@ namespace trc2
 {
     public partial class Form1 : TwitterViewerForm
     {
-        TwitterModelClass tatc = null;
+        TwitterModelClass tmc = null;
         List<ListView> listViewList = new List<ListView>();
-        decimal myID = new decimal();
 
         new public void InvokedTwitterStatus(TwitterStatus status)
         {
-            listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status, myID));
+            listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status, ref tmc));
         }
 
         public Form1()
@@ -64,19 +63,17 @@ namespace trc2
 
             try
             {
-                tatc = new TwitterModelClass(AppAccessToken, AppAccessTokenSecret,
+                tmc = new TwitterModelClass(AppAccessToken, AppAccessTokenSecret,
                     UserAccessToken, UserAccessTokenSecret,
                     this );
 
                 TwitterResponse<TwitterStatusCollection> pTimeline
-                    = TwitterTimeline.HomeTimeline(tatc.Token);
+                    = TwitterTimeline.HomeTimeline(tmc.Token);
                 UtilityClass.CheckResult(pTimeline.Result, pTimeline.ErrorMessage);
-
-                myID = tatc.myID;
 
                 foreach (TwitterStatus status in pTimeline.ResponseObject)
                 {
-                    listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status, myID));
+                    listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status, ref tmc));
                 }
                 listViewList.Add(listView1);
             }
@@ -105,15 +102,14 @@ namespace trc2
             {
                 RTScreenLabel.Visible = true;
                 RTScreenLabel.Links.Clear();
-                RTScreenLabel.Links.Add(0, ScreenNameLabel.Text.Length,
+                RTScreenLabel.Links.Add(0, RTScreenLabel.Text.Length,
                     "https://twitter.com/" + TwitterViewClass.GetRTScreenName(item));
             }
             else
             {
                 RTScreenLabel.Visible = false;
             }
-            TextLabel.Text = TwitterViewClass.GetText(item);
-            TextLabel.Links.Clear();
+            textBox1.Text = TwitterViewClass.GetText(item).Replace("\n","\r\n");
             TimeLabel.Text = (TwitterViewClass.GetStatusCreatedDate(item)).ToString
                 ("yyyy/MM/dd HH:mm:ss");
 
@@ -129,5 +125,6 @@ namespace trc2
         {
 
         }
+
     }
 }
