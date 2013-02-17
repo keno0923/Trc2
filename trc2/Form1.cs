@@ -31,6 +31,7 @@ namespace trc2
         private void Form1_Load(object sender, EventArgs e)
         {
             listViewList.Add(listView1);
+            tabControl1.TabPages[0].Tag = listView1;
 
             StreamReader srApp = null;
             String AppAccessToken = null;
@@ -86,9 +87,20 @@ namespace trc2
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count == 0)
+            BufferedListView view = (BufferedListView)sender;
+            if (view.SelectedItems.Count == 0)
                 return;
-            ListViewItem item = listView1.SelectedItems[0];
+
+            foreach (ListViewItem prevReplyStatusItem in view.Items)
+            {
+                if (prevReplyStatusItem.Font.Bold == true)
+                {
+                    prevReplyStatusItem.Font = new Font(prevReplyStatusItem.Font, FontStyle.Bold);
+                    break;
+                }
+            }
+
+            ListViewItem item = view.SelectedItems[0];
             UserImageBox.Image = TwitterViewClass.GetImageFromListItem(item);
             RTUserImageBox.Image = TwitterViewClass.GetRTImageFromListItem(item);
             RTUserImageBox.Visible = (RTUserImageBox.Image != null);
@@ -113,6 +125,13 @@ namespace trc2
             SetLinkToTextBox( richTextBox1, TwitterViewClass.GetText(item).Replace("\n","\r\n"));
             TimeLabel.Text = (TwitterViewClass.GetStatusCreatedDate(item)).ToString
                 ("yyyy/MM/dd HH:mm:ss");
+
+            decimal? id = TwitterViewClass.GetInReplyToStatusId(item);
+            if (id.HasValue && view.Items.ContainsKey(id.Value.ToString()))
+            {
+                ListViewItem replyItem = view.Items.Find(id.Value.ToString(), false)[0];
+                replyItem.Font = new Font(replyItem.Font, FontStyle.Bold);
+            }
         }
 
         private void SetLinkToTextBox(RichTextBox box, String text)
@@ -139,7 +158,55 @@ namespace trc2
 
         private void デバグ１ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            richTextBox1.debug();
         }
 
+        private void 公式RTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ListView lView = (ListView)tabControl1.SelectedTab.Tag;
+            TwitterViewClass.OfficialReTweet(lView.SelectedItems[0], ref tmc);
+        }
+
+        private void mentionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            BufferedListView view = (BufferedListView)sender;
+            ListViewItem currentItem = view.SelectedItems[0];
+            string currentName = TwitterViewClass.GetScreenName( currentItem );
+            if (e.Control && e.KeyCode == Keys.Down)
+            {
+                foreach (ListViewItem item in view.Items)
+                {
+                    if (TwitterViewClass.GetScreenName(item) == currentName &&
+                        Decimal.Parse(item.Text) < Decimal.Parse(currentItem.Text))
+                    {
+                        item.Selected = true;
+                        item.Focused = true;
+                        item.EnsureVisible();
+                        break;
+                    }
+                }
+                e.Handled = true;
+            }else if (e.Control && e.KeyCode == Keys.Up)
+            {
+                for (int i = view.Items.Count - 1; i >= 0; i--)
+                {
+                    ListViewItem item = view.Items[i];
+                    if (TwitterViewClass.GetScreenName(item) == currentName &&
+                        Decimal.Parse(item.Text) > Decimal.Parse(currentItem.Text))
+                    {
+                        item.Selected = true;
+                        item.Focused = true;
+                        item.EnsureVisible();
+                        break;
+                    }
+                }
+                e.Handled = true;
+            }
+        }
     }
 }

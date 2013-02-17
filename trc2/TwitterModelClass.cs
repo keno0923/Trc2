@@ -15,12 +15,14 @@ namespace trc2
         class CachedUserData
         {
             private Decimal? myID = null;
+            private TwitterUser ownUser = null;
             private UserIdCollection followerID = new UserIdCollection();
             private TwitterUserCollection cachedUser = new TwitterUserCollection();
 
             public void Clear()
             {
                 myID = null;
+                ownUser = null;
                 followerID.Clear();
                 cachedUser.Clear();
             }
@@ -29,6 +31,12 @@ namespace trc2
             {
                 set { myID = value; }
                 get { return myID; }
+            }
+
+            public TwitterUser OwnUser
+            {
+                set { ownUser = value; }
+                get { return ownUser; }
             }
 
             public UserIdCollection FollowerID
@@ -84,6 +92,13 @@ namespace trc2
         {
         }
 
+        public void OfficialReTweet(TwitterStatus status)
+        {
+            if( MessageBox.Show("ReTweetしていいですか？","確認",MessageBoxButtons.OKCancel) 
+                == DialogResult.OK)
+                TwitterStatus.Retweet(Token, status.Id);
+        }
+
         public UserIdCollection FollowerID
         {
             get
@@ -111,9 +126,13 @@ namespace trc2
         {
             get
             {
-                TwitterResponse<TwitterUser> response = TwitterAccount.VerifyCredentials(tokens);
-                UtilityClass.CheckResult(response.Result, response.ErrorMessage);
-                return response.ResponseObject;
+                if (cuData.OwnUser == null)
+                {
+                    TwitterResponse<TwitterUser> response = TwitterAccount.VerifyCredentials(tokens);
+                    UtilityClass.CheckResult(response.Result, response.ErrorMessage);
+                    cuData.OwnUser = response.ResponseObject;
+                }
+                return cuData.OwnUser;
             }
         }
 

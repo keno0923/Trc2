@@ -24,9 +24,9 @@ namespace trc2
             item.SubItems.Add(status.Text);
             item.Tag = status;
             if (status.InReplyToUserId == tmc.MyID) item.ImageIndex = 0;
-               else if (status.RetweetedStatus != null) item.ImageIndex = 1;
-               else if (status.User.Id == tmc.MyID) item.ImageIndex = 2;
-
+               else if (status.User.Id == tmc.MyID) item.ImageIndex = 1;
+                else if (status.RetweetedStatus != null) item.ImageIndex = 2;
+    
             if (!tmc.FollowerID.Contains(status.User.Id))
                 item.ForeColor = Color.Blue;
 
@@ -67,6 +67,12 @@ namespace trc2
             }
         }
 
+        public static decimal? GetInReplyToStatusId(ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            return status.InReplyToStatusId;
+        }
+
         public static String GetScreenName(ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
@@ -96,6 +102,12 @@ namespace trc2
             return (status.RetweetedStatus != null) ?
                status.RetweetedStatus.CreatedDate :
                status.CreatedDate;
+        }
+
+        public static void OfficialReTweet(ListViewItem item, ref TwitterModelClass tmc)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            tmc.OfficialReTweet(status);
         }
 
         public static String GetScreenNamePair(ListViewItem item)

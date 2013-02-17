@@ -63,7 +63,9 @@
     <Compile Include="BufferedListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RichTextBoxEx.cs" />
+    <Compile Include="RichTextBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ExtendedTwitterUser.cs" />
     <Compile Include="ITwitterViewerForm.cs">
       <SubType>Form</SubType>

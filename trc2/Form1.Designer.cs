@@ -3,7 +3,7 @@
     partial class Form1
     {
         /// <summary>
-s        /// 必要なデザイナー変数です。
+        /// 必要なデザイナー変数です。
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
@@ -39,7 +39,7 @@ s        /// 必要なデザイナー変数です。
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox1 = new trc2.RichTextBoxEx();
             this.RTScreenLabel = new System.Windows.Forms.LinkLabel();
             this.RTUserImageBox = new System.Windows.Forms.PictureBox();
             this.TimeLabel = new System.Windows.Forms.Label();
@@ -48,6 +48,11 @@ s        /// 必要なデザイナー変数です。
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ツールToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.デバグ１ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tweetTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.公式RTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mentionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.TextLengthLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -68,17 +73,14 @@ s        /// 必要なデザイナー変数です。
             this.listView1.Location = new System.Drawing.Point(3, 3);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-<<<<<<< HEAD
-            this.listView1.Size = new System.Drawing.Size(739, 387);
-=======
-            this.listView1.Size = new System.Drawing.Size(739, 330);
->>>>>>> origin/master
+            this.listView1.Size = new System.Drawing.Size(739, 193);
             this.listView1.SmallImageList = this.iconList;
             this.listView1.Sorting = System.Windows.Forms.SortOrder.Descending;
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listView1_KeyDown);
             // 
             // ID
             // 
@@ -114,7 +116,7 @@ s        /// 必要なデザイナー変数です。
             this.tabControl1.Location = new System.Drawing.Point(0, 144);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(753, 362);
+            this.tabControl1.Size = new System.Drawing.Size(753, 224);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -123,7 +125,7 @@ s        /// 必要なデザイナー変数です。
             this.tabPage1.Location = new System.Drawing.Point(4, 21);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(745, 393);
+            this.tabPage1.Size = new System.Drawing.Size(745, 199);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -133,7 +135,7 @@ s        /// 必要なデザイナー変数です。
             this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(745, 393);
+            this.tabPage2.Size = new System.Drawing.Size(745, 199);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -148,7 +150,7 @@ s        /// 必要なデザイナー変数です。
             this.panel1.Controls.Add(this.ScreenNameLabel);
             this.panel1.Controls.Add(this.UserImageBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 26);
+            this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(752, 112);
             this.panel1.TabIndex = 2;
@@ -233,10 +235,11 @@ s        /// 必要なデザイナー変数です。
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ツールToolStripMenuItem});
+            this.ツールToolStripMenuItem,
+            this.tweetTToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(752, 26);
+            this.menuStrip1.Size = new System.Drawing.Size(752, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -245,21 +248,65 @@ s        /// 必要なデザイナー変数です。
             this.ツールToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.デバグ１ToolStripMenuItem});
             this.ツールToolStripMenuItem.Name = "ツールToolStripMenuItem";
-            this.ツールToolStripMenuItem.Size = new System.Drawing.Size(56, 22);
+            this.ツールToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.ツールToolStripMenuItem.Text = "ツール";
             // 
             // デバグ１ToolStripMenuItem
             // 
             this.デバグ１ToolStripMenuItem.Name = "デバグ１ToolStripMenuItem";
-            this.デバグ１ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.デバグ１ToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.デバグ１ToolStripMenuItem.Text = "デバグ１";
             this.デバグ１ToolStripMenuItem.Click += new System.EventHandler(this.デバグ１ToolStripMenuItem_Click);
+            // 
+            // tweetTToolStripMenuItem
+            // 
+            this.tweetTToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.公式RTToolStripMenuItem,
+            this.mentionToolStripMenuItem});
+            this.tweetTToolStripMenuItem.Name = "tweetTToolStripMenuItem";
+            this.tweetTToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.tweetTToolStripMenuItem.Text = "Tweet(&T)";
+            // 
+            // 公式RTToolStripMenuItem
+            // 
+            this.公式RTToolStripMenuItem.Name = "公式RTToolStripMenuItem";
+            this.公式RTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.公式RTToolStripMenuItem.Text = "公式RT";
+            this.公式RTToolStripMenuItem.Click += new System.EventHandler(this.公式RTToolStripMenuItem_Click);
+            // 
+            // mentionToolStripMenuItem
+            // 
+            this.mentionToolStripMenuItem.Name = "mentionToolStripMenuItem";
+            this.mentionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mentionToolStripMenuItem.Text = "Mention";
+            this.mentionToolStripMenuItem.Click += new System.EventHandler(this.mentionToolStripMenuItem_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(7, 374);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(703, 19);
+            this.textBox1.TabIndex = 4;
+            // 
+            // TextLengthLabel
+            // 
+            this.TextLengthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextLengthLabel.AutoSize = true;
+            this.TextLengthLabel.Location = new System.Drawing.Point(716, 378);
+            this.TextLengthLabel.Name = "TextLengthLabel";
+            this.TextLengthLabel.Size = new System.Drawing.Size(23, 12);
+            this.TextLengthLabel.TabIndex = 5;
+            this.TextLengthLabel.Text = "140";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 506);
+            this.ClientSize = new System.Drawing.Size(752, 399);
+            this.Controls.Add(this.TextLengthLabel);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
@@ -297,10 +344,15 @@ s        /// 必要なデザイナー変数です。
         private System.Windows.Forms.PictureBox RTUserImageBox;
         private System.Windows.Forms.LinkLabel RTScreenLabel;
         private BufferedListView listView1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private RichTextBoxEx richTextBox1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem ツールToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem デバグ１ToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label TextLengthLabel;
+        private System.Windows.Forms.ToolStripMenuItem tweetTToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 公式RTToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mentionToolStripMenuItem;
     }
 }
 
