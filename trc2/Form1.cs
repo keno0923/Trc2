@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Windows.Documents;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -109,10 +110,14 @@ namespace trc2
             {
                 RTScreenLabel.Visible = false;
             }
-            textBox1.Text = TwitterViewClass.GetText(item).Replace("\n","\r\n");
+            SetLinkToTextBox( richTextBox1, TwitterViewClass.GetText(item).Replace("\n","\r\n"));
             TimeLabel.Text = (TwitterViewClass.GetStatusCreatedDate(item)).ToString
                 ("yyyy/MM/dd HH:mm:ss");
+        }
 
+        private void SetLinkToTextBox(RichTextBox box, String text)
+        {
+            box.Text = text;
         }
 
         private void ScreenNameLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -124,6 +129,16 @@ namespace trc2
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void richTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            if (e.LinkText.Substring(0,3) == "htt")
+                System.Diagnostics.Process.Start(e.LinkText);
+        }
+
+        private void デバグ１ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
         }
 
     }
