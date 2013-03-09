@@ -92,12 +92,7 @@ namespace trc2
         {
         }
 
-        public void OfficialReTweet(TwitterStatus status)
-        {
-            if( MessageBox.Show("ReTweetしていいですか？","確認",MessageBoxButtons.OKCancel) 
-                == DialogResult.OK)
-                TwitterStatus.Retweet(Token, status.Id);
-        }
+
 
         public UserIdCollection FollowerID
         {

@@ -107,7 +107,7 @@ namespace trc2
         public static void OfficialReTweet(ListViewItem item, ref TwitterModelClass tmc)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
-            tmc.OfficialReTweet(status);
+            TwitterStatus.Retweet(tmc.Token, status.Id);
         }
 
         public static String GetScreenNamePair(ListViewItem item)
@@ -125,6 +125,26 @@ namespace trc2
                 status.User.ScreenName + " / " + status.User.Name : null;
         }
 
+        public static void SetMentionToTextBox(TextBox tb, ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            tb.Tag = item;
+            tb.Text = "@" + status.User.ScreenName + " ";
+
+            tb.Focus();
+            tb.Select(tb.TextLength, 0);
+        }
+ 
+        public static void SetUORTToTextBox(TextBox tb, ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            tb.Tag = item;
+            tb.Text = " RT @" + status.User.ScreenName + ":" + status.Text;
+
+            tb.Focus();
+            tb.Select(0, 0);
+        }
+
         public static void SetItemColorByFollowedUser(TwitterModelClass tmclass, ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
@@ -137,6 +157,20 @@ namespace trc2
         public static void Clear()
         {
             cachedUserImage.Clear();
+        }
+
+        public static void UpdateStatus(TextBox tb, ref TwitterModelClass tmc)
+        {
+            StatusUpdateOptions options = new StatusUpdateOptions();
+            options.UseSSL = true;
+
+            if (tb.Tag != null)
+            {
+                TwitterStatus mentionedStatus = (TwitterStatus)((ListViewItem)tb.Tag).Tag;
+                options.InReplyToStatusId = mentionedStatus.Id;
+            }
+            TwitterStatus.Update(tmc.Token,tb.Text,options);
+            tb.Clear();
         }
  
     }
