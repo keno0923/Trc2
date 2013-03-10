@@ -67,7 +67,14 @@ namespace trc2
 
             userStream.StartUserStream(
                 null,
-                null,
+                new StreamStoppedCallback((StopReasons stopreason) =>
+                {
+                    parentForm.Invoke((MethodInvoker)delegate
+                    {
+                        MessageBox.Show(Enum.GetName(typeof(StopReasons), stopreason));
+                    });
+                }
+                    ),
                 new StatusCreatedCallback((TwitterStatus ts) =>
                 {
                     parentForm.Invoke((MethodInvoker)delegate

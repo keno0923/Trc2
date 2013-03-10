@@ -20,6 +20,7 @@ namespace trc2
         new public void InvokedTwitterStatus(TwitterStatus status)
         {
             listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status, ref tmc));
+            TwitterViewClass.PlaySoundOnTweet(status, ref tmc);
         }
 
         public Form1()

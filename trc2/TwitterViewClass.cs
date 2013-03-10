@@ -33,6 +33,14 @@ namespace trc2
             return item;
         }
 
+        public static void PlaySoundOnTweet(TwitterStatus status, ref TwitterModelClass tmc)
+        {
+            if (status.InReplyToUserId == tmc.MyID)
+                new System.Media.SoundPlayer(@"C:\WINDOWS\Media\tada.wav").Play();
+            else
+                new System.Media.SoundPlayer(@"C:\WINDOWS\Media\Windows XP Balloon.wav").Play();
+        }
+
         private static void CacheBitmapFromURL(String URL)
         {
             if (!cachedUserImage.ContainsKey(URL))
