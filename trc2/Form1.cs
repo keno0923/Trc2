@@ -91,6 +91,7 @@ namespace trc2
             BufferedListView view = (BufferedListView)sender;
             if (view.SelectedItems.Count == 0)
                 return;
+            textBox1.Tag = null;
 
             foreach (ListViewItem prevReplyStatusItem in view.Items)
             {
@@ -165,7 +166,9 @@ namespace trc2
         private void 公式RTToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ListView lView = (ListView)tabControl1.SelectedTab.Tag;
-            TwitterViewClass.OfficialReTweet(lView.SelectedItems[0], ref tmc);
+            if (MessageBox.Show("ReTweetしていいですか？", "確認", MessageBoxButtons.OKCancel)
+                == DialogResult.OK)
+                TwitterViewClass.OfficialReTweet(lView.SelectedItems[0], ref tmc);
         }
 
         private void mentionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -208,6 +211,43 @@ namespace trc2
                 }
                 e.Handled = true;
             }
+            else if (e.Control && e.KeyCode == Keys.M)
+            {
+                MessageBox.Show("ssss");
+                e.Handled = true;
+            }
+        }
+        
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            BufferedListView view = (BufferedListView)sender;
+            ListViewItem currentItem = view.SelectedItems[0];
+            TwitterViewClass.SetMentionToTextBox(textBox1, currentItem);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Enter)
+                    TwitterViewClass.UpdateStatus(textBox1, ref tmc);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.Source);
+            }
+        }
+
+        private void 非公式RTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BufferedListView view = (BufferedListView)tabControl1.SelectedTab.Tag;
+            ListViewItem currentItem = view.SelectedItems[0];
+            TwitterViewClass.SetUORTToTextBox(textBox1, currentItem);
         }
     }
 }
