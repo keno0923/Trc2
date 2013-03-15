@@ -39,13 +39,16 @@ namespace trc2
             String AppAccessTokenSecret = null;
 
             try {
+                System.IO.Directory.SetCurrentDirectory(Application.StartupPath);
                 srApp = new StreamReader("../../datauser.pass", Encoding.Default);
                 AppAccessToken = srApp.ReadLine();
                 AppAccessTokenSecret = srApp.ReadLine();
             }
             catch (Exception)
             {
-                MessageBox.Show("アプリケーションの秘密鍵ファイルが見当たりませんでした。");
+                String Err = "アプリケーションの秘密鍵ファイルが見当たりませんでした。" +
+                    "\nSearchDirectory:" + System.IO.Directory.GetCurrentDirectory();
+                MessageBox.Show(Err);
                 Application.Exit();
             }
 
@@ -173,7 +176,9 @@ namespace trc2
 
         private void mentionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            BufferedListView view = (BufferedListView)tabControl1.SelectedTab.Tag; 
+            ListViewItem currentItem = view.SelectedItems[0];
+            TwitterViewClass.SetMentionToTextBox(textBox1, currentItem);
         }
 
         private void listView1_KeyDown(object sender, KeyEventArgs e)
