@@ -5,8 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
-using Twitterizer;
-using Twitterizer.Streaming;
+using TweetSharp;
 using System.Net;
 using System.IO;
 
@@ -15,11 +14,19 @@ namespace trc2
     class TwitterViewClass
     {
         static Dictionary<String, Bitmap> cachedUserImage = new Dictionary<string, Bitmap>();
- 
+
+        public static bool isMentionToMe(TwitterStatus status, ref TwitterModelClass tmc)
+        {
+            if( status.InReplyToUserId == null )
+                return false;
+            return ( tmc.MyID == (long)status.InReplyToUserId );
+        }
+
         public static ListViewItem GetRecordByStatus(TwitterStatus status, ref TwitterModelClass tmc)
         {
             ListViewItem item = new ListViewItem();
-            item.Text = status.StringId;
+            item.Text = status.Id.ToString();
+            item.Name = item.Text;
             item.SubItems.Add(status.User.ScreenName);
             item.SubItems.Add(status.Text);
             item.Tag = status;
@@ -56,8 +63,8 @@ namespace trc2
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
             String ImageURL = (status.RetweetedStatus != null) ?
-                status.RetweetedStatus.User.ProfileImageSecureLocation :
-                status.User.ProfileImageSecureLocation;
+                status.RetweetedStatus.User.ProfileImageUrlHttps :
+                status.User.ProfileImageUrlHttps;
             CacheBitmapFromURL(ImageURL);
 
             return cachedUserImage[ImageURL];
@@ -67,7 +74,7 @@ namespace trc2
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
             if(status.RetweetedStatus != null){
-                String RTImageURL = status.User.ProfileImageSecureLocation;
+                String RTImageURL = status.User.ProfileImageUrlHttps;
                 CacheBitmapFromURL(RTImageURL);
                 return cachedUserImage[RTImageURL];
             }else{
@@ -115,7 +122,9 @@ namespace trc2
         public static void OfficialReTweet(ListViewItem item, ref TwitterModelClass tmc)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
-            TwitterStatus.Retweet(tmc.Token, status.Id);
+            RetweetOptions options = new RetweetOptions();
+            options.Id = status.Id;
+            tmc.service.Retweet(options);
         }
 
         public static String GetScreenNamePair(ListViewItem item)
@@ -153,15 +162,6 @@ namespace trc2
             tb.Select(0, 0);
         }
 
-        public static void SetItemColorByFollowedUser(TwitterModelClass tmclass, ListViewItem item)
-        {
-            TwitterStatus status = (TwitterStatus)item.Tag;
-            if (!tmclass.FollowerID.Contains(status.Id))
-            {
-
-            }
-        } 
-
         public static void Clear()
         {
             cachedUserImage.Clear();
@@ -169,15 +169,19 @@ namespace trc2
 
         public static void UpdateStatus(TextBox tb, ref TwitterModelClass tmc)
         {
-            StatusUpdateOptions options = new StatusUpdateOptions();
-            options.UseSSL = true;
+            SendTweetOptions options = new SendTweetOptions();
+            tmc.service.SendTweet(options);
 
             if (tb.Tag != null)
             {
+                //  Mentionなら
                 TwitterStatus mentionedStatus = (TwitterStatus)((ListViewItem)tb.Tag).Tag;
                 options.InReplyToStatusId = mentionedStatus.Id;
             }
-            TwitterStatus.Update(tmc.Token,tb.Text,options);
+   
+            options.Status = tb.Text;
+            tmc.service.SendTweet(options);
+            
             tb.Clear();
         }
  

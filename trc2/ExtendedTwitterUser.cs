@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-using Twitterizer;
-using Twitterizer.Streaming;
+using TweetSharp;
 
 namespace trc2
 {

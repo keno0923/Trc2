@@ -7,20 +7,46 @@ using System.Windows.Documents;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Twitterizer;
+
+using TweetSharp;
 using System.IO;
+using System.Net;
 
 namespace trc2
 {
     public partial class Form1 : TwitterViewerForm
     {
         TwitterModelClass tmc = null;
-        List<ListView> listViewList = new List<ListView>();
 
         new public void InvokedTwitterStatus(TwitterStatus status)
         {
             listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status, ref tmc));
+            if (TwitterViewClass.isMentionToMe(status, ref tmc))
+            {
+                listView2.Items.Add(TwitterViewClass.GetRecordByStatus(status, ref tmc));
+            }
             TwitterViewClass.PlaySoundOnTweet(status, ref tmc);
+        }
+
+        new public void InvokedDeleteStatus(long statusid)
+        {
+            string str = statusid.ToString();
+            ListViewItem[] deleteitems = listView1.Items.Find(str, false);
+            if (deleteitems.Length != 0)
+            {
+                foreach (ListViewItem item in deleteitems)
+                {
+                    item.ForeColor = Color.Red;
+                }
+            }
+            deleteitems = listView2.Items.Find(str, false);
+            if (deleteitems.Length != 0)
+            {
+                foreach (ListViewItem item in deleteitems)
+                {
+                    item.ForeColor = Color.Red;
+                }
+            }
         }
 
         public Form1()
@@ -31,8 +57,8 @@ namespace trc2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            listViewList.Add(listView1);
             tabControl1.TabPages[0].Tag = listView1;
+            tabControl1.TabPages[1].Tag = listView2;
 
             StreamReader srApp = null;
             String AppAccessToken = null;
@@ -67,21 +93,40 @@ namespace trc2
                 Application.Exit();
             }
 
+//          WebClient wc = new WebClient();
+//          string str = wc.DownloadString("https://api.twitter.com/1.1/help/configuration.json");
+
+
             try
             {
+                //  ユーザー認証を行う
                 tmc = new TwitterModelClass(AppAccessToken, AppAccessTokenSecret,
                     UserAccessToken, UserAccessTokenSecret,
                     this );
 
+                //  自分のタイムラインを取得する
+                /*
                 TwitterResponse<TwitterStatusCollection> pTimeline
                     = TwitterTimeline.HomeTimeline(tmc.Token);
                 UtilityClass.CheckResult(pTimeline.Result, pTimeline.ErrorMessage);
+                */
+                IEnumerable<TwitterStatus> pTimeline = tmc.service.ListTweetsOnHomeTimeline(
+                    new ListTweetsOnHomeTimelineOptions());
 
-                foreach (TwitterStatus status in pTimeline.ResponseObject)
+                //  自分のタイムラインをリストに追加する
+                foreach (TwitterStatus status in pTimeline)
                 {
                     listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status, ref tmc));
                 }
-                listViewList.Add(listView1);
+
+                IEnumerable<TwitterStatus> mTimeline = tmc.service.ListTweetsMentioningMe(
+                    new ListTweetsMentioningMeOptions());
+
+                //  自分のタイムラインをリストに追加する
+                foreach (TwitterStatus status in mTimeline)
+                {
+                    listView2.Items.Add(TwitterViewClass.GetRecordByStatus(status, ref tmc));
+                }
             }
             catch (Exception exp)
             {
@@ -100,7 +145,7 @@ namespace trc2
             {
                 if (prevReplyStatusItem.Font.Bold == true)
                 {
-                    prevReplyStatusItem.Font = new Font(prevReplyStatusItem.Font, FontStyle.Bold);
+                    prevReplyStatusItem.Font = new Font(prevReplyStatusItem.Font, FontStyle.Regular);
                     break;
                 }
             }
