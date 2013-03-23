@@ -74,7 +74,7 @@
             this.listView1.Location = new System.Drawing.Point(3, 3);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(739, 193);
+            this.listView1.Size = new System.Drawing.Size(739, 192);
             this.listView1.SmallImageList = this.iconList;
             this.listView1.Sorting = System.Windows.Forms.SortOrder.Descending;
             this.listView1.TabIndex = 0;
@@ -124,20 +124,20 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.listView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 21);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(745, 199);
+            this.tabPage1.Size = new System.Drawing.Size(745, 198);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 21);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(745, 199);
+            this.tabPage2.Size = new System.Drawing.Size(745, 198);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -152,7 +152,7 @@
             this.panel1.Controls.Add(this.ScreenNameLabel);
             this.panel1.Controls.Add(this.UserImageBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 24);
+            this.panel1.Location = new System.Drawing.Point(0, 26);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(752, 112);
             this.panel1.TabIndex = 2;
@@ -241,7 +241,7 @@
             this.tweetTToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(752, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(752, 26);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -250,13 +250,13 @@
             this.ツールToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.デバグ１ToolStripMenuItem});
             this.ツールToolStripMenuItem.Name = "ツールToolStripMenuItem";
-            this.ツールToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.ツールToolStripMenuItem.Size = new System.Drawing.Size(56, 22);
             this.ツールToolStripMenuItem.Text = "ツール";
             // 
             // デバグ１ToolStripMenuItem
             // 
             this.デバグ１ToolStripMenuItem.Name = "デバグ１ToolStripMenuItem";
-            this.デバグ１ToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.デバグ１ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.デバグ１ToolStripMenuItem.Text = "デバグ１";
             this.デバグ１ToolStripMenuItem.Click += new System.EventHandler(this.デバグ１ToolStripMenuItem_Click);
             // 
@@ -267,27 +267,27 @@
             this.非公式RTToolStripMenuItem,
             this.mentionToolStripMenuItem});
             this.tweetTToolStripMenuItem.Name = "tweetTToolStripMenuItem";
-            this.tweetTToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.tweetTToolStripMenuItem.Size = new System.Drawing.Size(74, 22);
             this.tweetTToolStripMenuItem.Text = "Tweet(&T)";
             // 
             // 公式RTToolStripMenuItem
             // 
             this.公式RTToolStripMenuItem.Name = "公式RTToolStripMenuItem";
-            this.公式RTToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.公式RTToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.公式RTToolStripMenuItem.Text = "公式RT";
             this.公式RTToolStripMenuItem.Click += new System.EventHandler(this.公式RTToolStripMenuItem_Click);
             // 
             // 非公式RTToolStripMenuItem
             // 
             this.非公式RTToolStripMenuItem.Name = "非公式RTToolStripMenuItem";
-            this.非公式RTToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.非公式RTToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.非公式RTToolStripMenuItem.Text = "非公式RT";
             this.非公式RTToolStripMenuItem.Click += new System.EventHandler(this.非公式RTToolStripMenuItem_Click);
             // 
             // mentionToolStripMenuItem
             // 
             this.mentionToolStripMenuItem.Name = "mentionToolStripMenuItem";
-            this.mentionToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.mentionToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.mentionToolStripMenuItem.Text = "Mention";
             this.mentionToolStripMenuItem.Click += new System.EventHandler(this.mentionToolStripMenuItem_Click);
             // 

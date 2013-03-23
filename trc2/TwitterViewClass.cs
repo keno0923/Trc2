@@ -15,13 +15,18 @@ namespace trc2
     class TwitterViewClass
     {
         static Dictionary<String, Bitmap> cachedUserImage = new Dictionary<string, Bitmap>();
+        static Version ver = Environment.OSVersion.Version;
+
+        public TwitterViewClass()
+        {
+        }
  
         public static ListViewItem GetRecordByStatus(TwitterStatus status, ref TwitterModelClass tmc)
         {
             ListViewItem item = new ListViewItem();
             item.Text = status.StringId;
             item.SubItems.Add(status.User.ScreenName);
-            item.SubItems.Add(status.Text);
+            item.SubItems.Add(WebUtility.HtmlDecode(status.Text));
             item.Tag = status;
             if (status.InReplyToUserId == tmc.MyID) item.ImageIndex = 0;
                else if (status.User.Id == tmc.MyID) item.ImageIndex = 1;
@@ -38,7 +43,15 @@ namespace trc2
             if (status.InReplyToUserId == tmc.MyID)
                 new System.Media.SoundPlayer(@"C:\WINDOWS\Media\tada.wav").Play();
             else
-                new System.Media.SoundPlayer(@"C:\WINDOWS\Media\Windows XP Balloon.wav").Play();
+                if ((ver.Major == 6 && ver.Minor >= 1) || ver.Major > 6)
+                {
+                    // Windows 7 の機能を使用 
+                    new System.Media.SoundPlayer(@"C:\WINDOWS\Media\Windows Balloon.wav").Play();
+                }
+                else
+                {
+                    new System.Media.SoundPlayer(@"C:\WINDOWS\Media\Windows XP Balloon.wav").Play();
+                }
         }
 
         private static void CacheBitmapFromURL(String URL)
