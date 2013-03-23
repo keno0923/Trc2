@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Twitterizer;
-using Twitterizer.Streaming;
+using TweetSharp;
 using System.Windows.Forms;
 
 namespace trc2
@@ -14,23 +13,26 @@ namespace trc2
 
         class CachedUserData
         {
-            private Decimal? myID = null;
+            private long? myID = null;
             private TwitterUser ownUser = null;
-            private UserIdCollection followerID = new UserIdCollection();
-            private TwitterUserCollection cachedUser = new TwitterUserCollection();
+            private List<long> followerID = new List<long>();
 
             public void Clear()
             {
                 myID = null;
                 ownUser = null;
-                followerID.Clear();
-                cachedUser.Clear();
             }
 
-            public Decimal? MyID
+            public long? MyID
             {
                 set { myID = value; }
                 get { return myID; }
+            }
+
+            public List<long> FollowerID
+            {
+                set { followerID = value; }
+                get { return followerID; }
             }
 
             public TwitterUser OwnUser
@@ -38,55 +40,57 @@ namespace trc2
                 set { ownUser = value; }
                 get { return ownUser; }
             }
-
-            public UserIdCollection FollowerID
-            {
-                set { followerID = value; }
-                get { return followerID; }
-            }
-
-            public void AddCacheUser(TwitterUser user)
-            {
-                if (!cachedUser.Contains(user))
-                    cachedUser.Add(user);
-            }
         }
 
-        private OAuthTokens tokens = new OAuthTokens();
         private CachedUserData cuData = new CachedUserData();
-        private TwitterStream userStream = null;
+        private TwitterService tws;
+
+        public TwitterService service
+        {
+            get { return tws; }
+        }
+
+
+//      private TwitterStream userStream = null;
 
         public TwitterModelClass(string act, string acts, string ck, string cs, TwitterViewerForm form )
         {
+            /*
             tokens.AccessToken = act;
             tokens.AccessTokenSecret = acts;
             tokens.ConsumerKey = ck;
             tokens.ConsumerSecret = cs;
-            userStream = new TwitterStream(tokens, "beta", new StreamOptions());
+            */
+            tws = new TwitterService(ck, cs, act, acts);
+
+
             parentForm = form;
 
-            userStream.StartUserStream(
-                null,
-                new StreamStoppedCallback((StopReasons stopreason) =>
+            tws.StreamUser((streamEvent, response) =>
+            {
+                if (response.StatusCode == 0)
                 {
-                    parentForm.Invoke((MethodInvoker)delegate
+                    if (streamEvent is TwitterUserStreamStatus)
                     {
-                        MessageBox.Show(Enum.GetName(typeof(StopReasons), stopreason));
-                    });
-                }
-                    ),
-                new StatusCreatedCallback((TwitterStatus ts) =>
-                {
-                    parentForm.Invoke((MethodInvoker)delegate
+                        TwitterStatus tweet = ((TwitterUserStreamStatus)streamEvent).Status;
+                        parentForm.Invoke((MethodInvoker)delegate
+                        {
+                            ((Form1)parentForm).InvokedTwitterStatus(tweet);
+                        });
+                    }else if( streamEvent is TwitterUserStreamDeleteStatus )
                     {
-                        ((Form1)parentForm).InvokedTwitterStatus(ts);
-                    });
+                        TwitterUserStreamDeleteStatus dstatus = streamEvent as TwitterUserStreamDeleteStatus;
+                        parentForm.Invoke((MethodInvoker)delegate
+                        {
+                            ((Form1)parentForm).InvokedDeleteStatus(dstatus.StatusId);
+                        });
+                    }
+                    else if (streamEvent is TwitterUserStreamEvent)
+                    {
+                        TwitterUserStreamEvent evt = streamEvent as TwitterUserStreamEvent;
+                    }
                 }
-                    ),
-                null,
-                null,
-                null,
-                null
+            }
             );
         }
 
@@ -99,28 +103,20 @@ namespace trc2
         {
         }
 
-
-
-        public UserIdCollection FollowerID
+        public List<long> FollowerID
         {
             get
             {
                 if (cuData.FollowerID.Count == 0)
                 {
-                    TwitterResponse<UserIdCollection> IDs = TwitterFriendship.FollowersIds(Token);
-                    UtilityClass.CheckResult(IDs.Result, IDs.ErrorMessage);
-                    cuData.FollowerID = IDs.ResponseObject;
-                    cuData.FollowerID.Add((Decimal)cuData.MyID);
+                    //  フォローされてる人のリストを取得する
+                    List<long> IDs = service.ListFollowerIdsOf(new ListFollowerIdsOfOptions());
+                    cuData.FollowerID = IDs;
+
+                    //  自分のIDを追加する
+                    cuData.FollowerID.Add((long)cuData.MyID);
                 }
                 return cuData.FollowerID;
-            }
-        }
-
-        public OAuthTokens Token
-        {
-            get
-            {
-                return tokens;
             }
         }
 
@@ -130,21 +126,20 @@ namespace trc2
             {
                 if (cuData.OwnUser == null)
                 {
-                    TwitterResponse<TwitterUser> response = TwitterAccount.VerifyCredentials(tokens);
-                    UtilityClass.CheckResult(response.Result, response.ErrorMessage);
-                    cuData.OwnUser = response.ResponseObject;
+                    TwitterUser me = service.GetUserProfile(new GetUserProfileOptions());
+                    cuData.OwnUser = me;
                 }
                 return cuData.OwnUser;
             }
         }
 
-        public decimal MyID
+        public long MyID
         {
             get
             {
                 if( cuData.MyID == null )
                     cuData.MyID = Me.Id;
-                return (decimal)cuData.MyID;
+                return (long)cuData.MyID;
             }
         }
     }

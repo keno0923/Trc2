@@ -35,8 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\Twitterizer\Release\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Hammock.ClientProfile">
+      <HintPath>..\..\tweetsharp\bin\lib\4.0\Hammock.ClientProfile.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tweetsharp\bin\lib\4.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -51,11 +55,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Twitterizer2">
-      <HintPath>..\..\Twitterizer\Release\net40\Twitterizer2.dll</HintPath>
-    </Reference>
-    <Reference Include="Twitterizer2.Streaming">
-      <HintPath>..\..\Twitterizer\Release\net40\Twitterizer2.Streaming.dll</HintPath>
+    <Reference Include="TweetSharp">
+      <HintPath>..\..\tweetsharp\bin\lib\4.0\TweetSharp.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>

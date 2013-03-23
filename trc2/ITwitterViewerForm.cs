@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Twitterizer;
+using TweetSharp;
 using System.Windows.Forms;
 
 namespace trc2
@@ -15,5 +15,6 @@ namespace trc2
     public class TwitterViewerForm : Form, ITwitterViewerForm
     {
         public void InvokedTwitterStatus(TwitterStatus status) { }
+        public void InvokedDeleteStatus(long id) { }
      }
 }

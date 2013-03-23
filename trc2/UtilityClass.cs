@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Twitterizer;
-using Twitterizer.Streaming;
+using TweetSharp;
 
 namespace trc2
 {
     class UtilityClass
     {
-        static public void CheckResult(RequestResult result, string ErrMessage)
+/*     
+         static public void CheckResult(RequestResult result, string ErrMessage)
         {
             switch (result)
             {
@@ -27,5 +27,6 @@ namespace trc2
                     throw new ApplicationException("不明なエラー:" + ErrMessage);
             }
         }
+    */
     }
 }
