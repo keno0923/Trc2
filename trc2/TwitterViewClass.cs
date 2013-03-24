@@ -19,7 +19,7 @@ namespace trc2
         public TwitterViewClass()
         {
         }
- 
+
         public static bool isMentionToMe(TwitterStatus status, ref TwitterModelClass tmc)
         {
             if( status.InReplyToUserId == null )
@@ -72,6 +72,21 @@ namespace trc2
             }
         }
 
+        public static bool isMention(ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            return status.InReplyToUserId != null;
+        }
+
+        public static string GetToolTipDescription(ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+
+            string str = status.InReplyToScreenName + "says:\r\n" + 
+                status.TextDecoded;
+
+            return null;
+        }
         public static Bitmap GetImageFromListItem(ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;

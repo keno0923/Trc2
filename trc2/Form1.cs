@@ -105,11 +105,6 @@ namespace trc2
                     this );
 
                 //  自分のタイムラインを取得する
-                /*
-                TwitterResponse<TwitterStatusCollection> pTimeline
-                    = TwitterTimeline.HomeTimeline(tmc.Token);
-                UtilityClass.CheckResult(pTimeline.Result, pTimeline.ErrorMessage);
-                */
                 IEnumerable<TwitterStatus> pTimeline = tmc.service.ListTweetsOnHomeTimeline(
                     new ListTweetsOnHomeTimelineOptions());
 
@@ -133,6 +128,8 @@ namespace trc2
                 MessageBox.Show(exp.Message);
             }
         }
+
+
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -177,10 +174,11 @@ namespace trc2
                 ("yyyy/MM/dd HH:mm:ss");
 
             decimal? id = TwitterViewClass.GetInReplyToStatusId(item);
-            if (id.HasValue && view.Items.ContainsKey(id.Value.ToString()))
+            if (id.HasValue)
             {
-                ListViewItem replyItem = view.Items.Find(id.Value.ToString(), false)[0];
-                replyItem.Font = new Font(replyItem.Font, FontStyle.Bold);
+                ListViewItem[] replyItem = view.Items.Find(id.Value.ToString(), false);
+                if (replyItem.Length != 0)
+                    replyItem[0].Font = new Font(replyItem[0].Font, FontStyle.Bold);
             }
         }
 
@@ -263,7 +261,8 @@ namespace trc2
             }
             else if (e.Control && e.KeyCode == Keys.M)
             {
-                MessageBox.Show("ssss");
+                if( TwitterViewClass.isMention(currentItem) )
+                toolTip1.Show(TwitterViewClass.GetToolTipDescription(currentItem),this,Control.MousePosition);
                 e.Handled = true;
             }
         }
