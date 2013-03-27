@@ -18,6 +18,19 @@ namespace trc2
     {
         TwitterModelClass tmc = null;
 
+        public String AppAccessToken { get; private set; }
+        public String AppAccessTokenSecret { get; private set; }
+        public String UserAccessToken { get; private set; }
+        public String UserAccessTokenSecret { get; private set; }
+
+        public Timer Timer1
+        {
+            get { return timer1; }
+            set { timer1 = value; }
+        }
+
+
+
         new public void InvokedTwitterStatus(TwitterStatus status)
         {
             listView1.Items.Add(TwitterViewClass.GetRecordByStatus(status, ref tmc));
@@ -61,12 +74,10 @@ namespace trc2
             tabControl1.TabPages[1].Tag = listView2;
 
             StreamReader srApp = null;
-            String AppAccessToken = null;
-            String AppAccessTokenSecret = null;
 
             try {
                 System.IO.Directory.SetCurrentDirectory(Application.StartupPath);
-                srApp = new StreamReader("../../datauser.pass", Encoding.Default);
+                srApp = new StreamReader("../../dataapp.pass", Encoding.Default);
                 AppAccessToken = srApp.ReadLine();
                 AppAccessTokenSecret = srApp.ReadLine();
             }
@@ -79,11 +90,9 @@ namespace trc2
             }
 
             StreamReader srUser = null;
-            String UserAccessToken = null;
-            String UserAccessTokenSecret = null;
             try
             {
-                srUser = new StreamReader("../../dataapp.pass", Encoding.Default);
+                srUser = new StreamReader("../../datauser.pass", Encoding.Default);
                 UserAccessToken = srUser.ReadLine();
                 UserAccessTokenSecret = srUser.ReadLine();
             }
@@ -100,7 +109,7 @@ namespace trc2
             try
             {
                 //  ユーザー認証を行う
-                tmc = new TwitterModelClass(AppAccessToken, AppAccessTokenSecret,
+                tmc = new TwitterModelClass( AppAccessToken, AppAccessTokenSecret,
                     UserAccessToken, UserAccessTokenSecret,
                     this );
 
@@ -261,8 +270,10 @@ namespace trc2
             }
             else if (e.Control && e.KeyCode == Keys.M)
             {
-                if( TwitterViewClass.isMention(currentItem) )
-                toolTip1.Show(TwitterViewClass.GetToolTipDescription(currentItem),this,Control.MousePosition);
+                if (TwitterViewClass.isMention(currentItem))
+                {
+                    toolTip1.Show(TwitterViewClass.GetToolTipDescription(currentItem, ref tmc), this, Control.MousePosition, 1500);
+                }
                 e.Handled = true;
             }
         }
@@ -297,6 +308,18 @@ namespace trc2
             BufferedListView view = (BufferedListView)tabControl1.SelectedTab.Tag;
             ListViewItem currentItem = view.SelectedItems[0];
             TwitterViewClass.SetUORTToTextBox(textBox1, currentItem);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            tmc.StopUserStream();
+//          MessageBox.Show("ストリームを停止しました。");
+        }
+
+        private void oAuth認証ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OAuth form = new OAuth();
+            form.Show(this);
         }
     }
 }

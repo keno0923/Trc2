@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hammock.ClientProfile">
-      <HintPath>..\..\tweetsharp\bin\lib\4.0\Hammock.ClientProfile.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\tweetsharp\bin\lib\4.0\Newtonsoft.Json.dll</HintPath>
@@ -64,6 +61,12 @@
     <Compile Include="BufferedListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="OAuth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OAuth.Designer.cs">
+      <DependentUpon>OAuth.cs</DependentUpon>
+    </Compile>
     <Compile Include="RichTextBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -84,6 +87,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OAuth.resx">
+      <DependentUpon>OAuth.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -115,6 +121,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\hammock\src\net40\Hammock.ClientProfile\Hammock.ClientProfile.csproj">
+      <Project>{487B7E3C-9689-47BC-8785-73CCD92A3749}</Project>
+      <Name>Hammock.ClientProfile</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

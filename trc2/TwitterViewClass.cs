@@ -78,14 +78,17 @@ namespace trc2
             return status.InReplyToUserId != null;
         }
 
-        public static string GetToolTipDescription(ListViewItem item)
+        public static string GetToolTipDescription(ListViewItem item, ref TwitterModelClass tmc)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
+            GetTweetOptions option = new GetTweetOptions();
+            option.Id = status.InReplyToStatusId.Value;
+            TwitterStatus repstatus = tmc.service.GetTweet(option);
 
-            string str = status.InReplyToScreenName + "says:\r\n" + 
-                status.TextDecoded;
+            string str = status.InReplyToScreenName + " says:\r\n" + 
+                repstatus.TextDecoded;
 
-            return null;
+            return str;
         }
         public static Bitmap GetImageFromListItem(ListViewItem item)
         {
