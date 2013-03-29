@@ -50,10 +50,8 @@ namespace trc2
             get { return tws; }
         }
 
-
-//      private TwitterStream userStream = null;
-
-        public TwitterModelClass(string act, string acts, string ck, string cs, TwitterViewerForm form )
+                
+        public TwitterModelClass(string ck, string cs, string act, string acts, TwitterViewerForm form)
         {
             /*
             tokens.AccessToken = act;
@@ -63,11 +61,15 @@ namespace trc2
             */
             tws = new TwitterService(ck, cs, act, acts);
 
-
             parentForm = form;
 
             tws.StreamUser((streamEvent, response) =>
             {
+                parentForm.Invoke((MethodInvoker)delegate
+                {
+                    ((Form1)form).Timer1.Stop();
+                    ((Form1)form).Timer1.Start();
+                }); 
                 if (response.StatusCode == 0)
                 {
                     if (streamEvent is TwitterUserStreamStatus)
@@ -77,6 +79,7 @@ namespace trc2
                         {
                             ((Form1)parentForm).InvokedTwitterStatus(tweet);
                         });
+                        
                     }else if( streamEvent is TwitterUserStreamDeleteStatus )
                     {
                         TwitterUserStreamDeleteStatus dstatus = streamEvent as TwitterUserStreamDeleteStatus;
@@ -99,8 +102,9 @@ namespace trc2
             cuData.Clear();
         }
 
-        public void StartUserStream()
+        public void StopUserStream()
         {
+            tws.CancelStreaming();
         }
 
         public List<long> FollowerID
