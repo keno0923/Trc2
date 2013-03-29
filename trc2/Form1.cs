@@ -262,7 +262,7 @@ namespace trc2
             else if (e.Control && e.KeyCode == Keys.M)
             {
                 if( TwitterViewClass.isMention(currentItem) )
-                toolTip1.Show(TwitterViewClass.GetToolTipDescription(currentItem),this,Control.MousePosition);
+                toolTip1.Show(TwitterViewClass.GetToolTipDescription(currentItem, ref tmc),this,Control.MousePosition);
                 e.Handled = true;
             }
         }
