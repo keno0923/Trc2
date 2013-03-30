@@ -9,6 +9,8 @@ using TweetSharp;
 using System.Net;
 using System.IO;
 
+using RichTextBoxLinks;
+
 namespace trc2
 {
     class TwitterViewClass
@@ -20,24 +22,20 @@ namespace trc2
         {
         }
 
-        public static bool isMentionToMe(TwitterStatus status, ref TwitterModelClass tmc)
-        {
-            if( status.InReplyToUserId == null )
-                return false;
-            return ( tmc.MyID == (long)status.InReplyToUserId );
-        }
-
         public static ListViewItem GetRecordByStatus(TwitterStatus status, ref TwitterModelClass tmc)
         {
             ListViewItem item = new ListViewItem();
             item.Text = status.Id.ToString();
             item.Name = item.Text;
             item.SubItems.Add(status.User.ScreenName);
-            item.SubItems.Add(WebUtility.HtmlDecode(status.Text));
+            item.SubItems.Add(WebUtility.HtmlDecode(GetTextWithReplacingURL(status)));
             item.Tag = status;
-            if (status.InReplyToUserId == tmc.MyID) item.ImageIndex = 0;
-               else if (status.User.Id == tmc.MyID) item.ImageIndex = 1;
-                else if (status.RetweetedStatus != null) item.ImageIndex = 2;
+            if (isMentionToMe(status, ref tmc))
+                item.ImageIndex = 0;
+            else if (status.User.Id == tmc.MyID)
+                item.ImageIndex = 1;
+            else if (status.RetweetedStatus != null)
+                item.ImageIndex = 2;
     
             if (!tmc.FollowerID.Contains(status.User.Id))
                 item.ForeColor = Color.Blue;
@@ -47,7 +45,7 @@ namespace trc2
 
         public static void PlaySoundOnTweet(TwitterStatus status, ref TwitterModelClass tmc)
         {
-            if (status.InReplyToUserId == tmc.MyID)
+            if (isMentionToMe(status, ref tmc))
                 new System.Media.SoundPlayer(@"C:\WINDOWS\Media\tada.wav").Play();
             else
                 if ((ver.Major == 6 && ver.Minor >= 1) || ver.Major > 6)
@@ -76,6 +74,74 @@ namespace trc2
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
             return status.InReplyToUserId != null;
+        }
+
+        public static bool isMentionToMe(TwitterStatus status, ref TwitterModelClass tmc)
+        {
+            if (status.InReplyToUserId == null)
+                return false;
+
+            foreach (TwitterMention mention in status.Entities.Mentions)
+            {
+                if (mention.Id == tmc.MyID)
+                    return true;
+            }
+            return false;
+        }
+
+        public static void SetLinkToTextBox(RichTextBoxEx box, ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            if (status.RetweetedStatus != null)
+                status = status.RetweetedStatus;
+
+            string str = GetTextWithReplacingURL(status);
+            box.Text = str;
+
+            foreach (TwitterUrl url in status.Entities.Urls)
+            {
+                string ht = url.ExpandedValue;
+                int index = box.Text.IndexOf(ht);
+
+                if (index != -1)
+                {
+                    box.Text = box.Text.Remove(index, ht.Length);
+                    box.InsertLink(ht, url.Value, index);
+                }
+            }
+            foreach (TwitterMedia media in status.Entities.Media)
+            {
+                string ht = media.Url;
+                int index = box.Text.IndexOf(ht);
+
+                if (index != -1)
+                {
+                    box.Text = box.Text.Remove(index, ht.Length);
+                    box.InsertLink(ht, index);
+                }
+            }
+/*            foreach (TwitterHashTag tag in status.Entities.HashTags)
+            {
+                string ht = "#"+tag.Text;
+                int index = box.Text.IndexOf(ht);
+
+                if (index != -1)
+                {
+                    box.Text = box.Text.Remove(index, ht.Length);
+                    box.InsertLink(ht, "https://twitter.com/search?q="+ht, index);
+                }
+            }
+*/
+        }
+
+        private static string GetTextWithReplacingURL(TwitterStatus status)
+        {
+            string str = status.Text.Replace("\n", "\r\n");
+            foreach (TwitterUrl url in status.Entities.Urls)
+            {
+                str = str.Replace(url.Value, url.ExpandedValue);
+            }
+            return str;
         }
 
         public static string GetToolTipDescription(ListViewItem item, ref TwitterModelClass tmc )
@@ -158,6 +224,7 @@ namespace trc2
             RetweetOptions options = new RetweetOptions();
             options.Id = status.Id;
             tmc.service.Retweet(options);
+            
         }
 
         public static String GetScreenNamePair(ListViewItem item)
@@ -180,7 +247,6 @@ namespace trc2
             TwitterStatus status = (TwitterStatus)item.Tag;
             tb.Tag = item;
             tb.Text = "@" + status.User.ScreenName + " ";
-
             tb.Focus();
             tb.Select(tb.TextLength, 0);
         }

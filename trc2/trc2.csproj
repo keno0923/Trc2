@@ -71,12 +71,12 @@
     <Compile Include="OAuth.Designer.cs">
       <DependentUpon>OAuth.cs</DependentUpon>
     </Compile>
-    <Compile Include="RichTextBoxEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ExtendedTwitterUser.cs" />
     <Compile Include="ITwitterViewerForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RichTextBoxEx.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="TwitterViewClass.cs" />
     <Compile Include="UtilityClass.cs" />

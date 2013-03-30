@@ -178,7 +178,7 @@ namespace trc2
             {
                 RTScreenLabel.Visible = false;
             }
-            SetLinkToTextBox( richTextBox1, TwitterViewClass.GetText(item).Replace("\n","\r\n"));
+            TwitterViewClass.SetLinkToTextBox(richTextBox1, item);
             TimeLabel.Text = (TwitterViewClass.GetStatusCreatedDate(item)).ToString
                 ("yyyy/MM/dd HH:mm:ss");
 
@@ -189,11 +189,6 @@ namespace trc2
                 if (replyItem.Length != 0)
                     replyItem[0].Font = new Font(replyItem[0].Font, FontStyle.Bold);
             }
-        }
-
-        private void SetLinkToTextBox(RichTextBox box, String text)
-        {
-            box.Text = text;
         }
 
         private void ScreenNameLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -215,7 +210,6 @@ namespace trc2
 
         private void デバグ１ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            richTextBox1.debug();
         }
 
         private void 公式RTToolStripMenuItem_Click(object sender, EventArgs e)
@@ -235,7 +229,7 @@ namespace trc2
 
         private void listView1_KeyDown(object sender, KeyEventArgs e)
         {
-            BufferedListView view = (BufferedListView)sender;
+            BufferedListView view = sender as BufferedListView;
             ListViewItem currentItem = view.SelectedItems[0];
             string currentName = TwitterViewClass.GetScreenName( currentItem );
             if (e.Control && e.KeyCode == Keys.Down)
@@ -280,14 +274,16 @@ namespace trc2
         
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            BufferedListView view = (BufferedListView)sender;
+            BufferedListView view = sender as BufferedListView;
             ListViewItem currentItem = view.SelectedItems[0];
             TwitterViewClass.SetMentionToTextBox(textBox1, currentItem);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            TextBox tb = sender as TextBox;
+            int Remain = 140 - tb.TextLength;
+            TextLengthLabel.Text = Remain.ToString();
         }
         
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
@@ -312,7 +308,7 @@ namespace trc2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            tmc.StopUserStream();
+//          tmc.StopUserStream();
 //          MessageBox.Show("ストリームを停止しました。");
         }
 

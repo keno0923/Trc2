@@ -13,7 +13,6 @@ namespace trc2
 
         class CachedUserData
         {
-            private long? myID = null;
             private TwitterUser ownUser = null;
             private List<long> followerID = new List<long>();
 
@@ -23,11 +22,8 @@ namespace trc2
                 ownUser = null;
             }
 
-            public long? MyID
-            {
-                set { myID = value; }
-                get { return myID; }
-            }
+            public long? myID { set; get; }
+            public string mySName { set; get; }
 
             public List<long> FollowerID
             {
@@ -118,7 +114,7 @@ namespace trc2
                     cuData.FollowerID = IDs;
 
                     //  自分のIDを追加する
-                    cuData.FollowerID.Add((long)cuData.MyID);
+                    cuData.FollowerID.Add(cuData.myID.Value);
                 }
                 return cuData.FollowerID;
             }
@@ -141,9 +137,19 @@ namespace trc2
         {
             get
             {
-                if( cuData.MyID == null )
-                    cuData.MyID = Me.Id;
-                return (long)cuData.MyID;
+                if( cuData.myID == null )
+                    cuData.myID = Me.Id;
+                return cuData.myID.Value;
+            }
+        }
+
+        public string MySName
+        {
+            get
+            {
+                if (cuData.mySName == null)
+                    cuData.mySName = Me.ScreenName;
+                return cuData.mySName;
             }
         }
     }
