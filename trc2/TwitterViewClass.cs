@@ -98,6 +98,8 @@ namespace trc2
             string str = GetTextWithReplacingURL(status);
             box.Text = str;
 
+            Stack<Tuple<int, string,string>> URLs = new Stack<Tuple<int,string,string>>();
+
             foreach (TwitterUrl url in status.Entities.Urls)
             {
                 string ht = url.ExpandedValue;
@@ -105,10 +107,16 @@ namespace trc2
 
                 if (index != -1)
                 {
+                    URLs.Push(new Tuple<int,string,string>(index, ht, url.Value));
                     box.Text = box.Text.Remove(index, ht.Length);
-                    box.InsertLink(ht, url.Value, index);
                 }
             }
+
+            while( URLs.Count != 0 ){
+                Tuple<int, string, string > url = URLs.Pop();
+                box.InsertLink(url.Item2, url.Item3, url.Item1);
+            }
+
             foreach (TwitterMedia media in status.Entities.Media)
             {
                 string ht = media.Url;
