@@ -275,8 +275,11 @@ namespace trc2
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             BufferedListView view = sender as BufferedListView;
-            ListViewItem currentItem = view.SelectedItems[0];
-            TwitterViewClass.SetMentionToTextBox(textBox1, currentItem);
+            if (view.SelectedItems.Count != 0)
+            {
+                ListViewItem currentItem = view.SelectedItems[0];
+                TwitterViewClass.SetMentionToTextBox(textBox1, currentItem);
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

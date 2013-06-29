@@ -73,7 +73,7 @@ namespace trc2
         public static bool isMention(ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
-            return status.InReplyToUserId != null;
+            return status.InReplyToStatusId != null;
         }
 
         public static bool isMentionToMe(TwitterStatus status, ref TwitterModelClass tmc)
