@@ -219,12 +219,12 @@
             // RTScreenLabel
             // 
             this.RTScreenLabel.AutoSize = true;
-            this.RTScreenLabel.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.RTScreenLabel.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RTScreenLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.RTScreenLabel.LinkColor = System.Drawing.Color.Black;
             this.RTScreenLabel.Location = new System.Drawing.Point(36, 87);
             this.RTScreenLabel.Name = "RTScreenLabel";
-            this.RTScreenLabel.Size = new System.Drawing.Size(69, 15);
+            this.RTScreenLabel.Size = new System.Drawing.Size(65, 17);
             this.RTScreenLabel.TabIndex = 5;
             this.RTScreenLabel.TabStop = true;
             this.RTScreenLabel.Text = "linkLabel1";
@@ -255,7 +255,7 @@
             // 
             // ScreenNameLabel
             // 
-            this.ScreenNameLabel.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.ScreenNameLabel.Font = new System.Drawing.Font("Segoe UI Symbol", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ScreenNameLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.ScreenNameLabel.LinkColor = System.Drawing.Color.Black;
             this.ScreenNameLabel.Location = new System.Drawing.Point(65, 8);

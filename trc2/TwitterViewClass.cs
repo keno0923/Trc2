@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Media;
 
 using TweetSharp;
 using System.Net;
 using System.IO;
+
 
 using RichTextBoxLinks;
 
@@ -196,6 +198,7 @@ namespace trc2
         public static String GetScreenName(ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
+
             return (status.RetweetedStatus != null) ?
                status.RetweetedStatus.User.ScreenName :
                status.User.ScreenName;
@@ -206,6 +209,26 @@ namespace trc2
             TwitterStatus status = (TwitterStatus)item.Tag;
             return (status.RetweetedStatus != null) ?
                 status.User.ScreenName : null;
+        }
+
+        public static String GetScreenNamePair(ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            string keymark = (TwitterControllerClass.isUserProtected(status.User)) ?
+                "\U0001F512" : "";
+            //  公式RTされていたら鍵ではない
+            return (status.RetweetedStatus != null) ?
+               status.RetweetedStatus.User.ScreenName + " / " + status.RetweetedStatus.User.Name :
+               status.User.ScreenName + " / " + status.User.Name + keymark;
+        }
+
+        public static String GetRTScreenNamePair(ListViewItem item)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            string keymark = (TwitterControllerClass.isUserProtected(status.User)) ?
+                "\U0001F512" : "";
+            return (status.RetweetedStatus != null) ?
+                status.User.ScreenName + " / " + status.User.Name + keymark : null;
         }
 
         public static String GetText(ListViewItem item)
@@ -228,26 +251,15 @@ namespace trc2
 
         public static void OfficialReTweet(ListViewItem item, ref TwitterModelClass tmc)
         {
-            TwitterStatus status = (TwitterStatus)item.Tag;
-            RetweetOptions options = new RetweetOptions();
-            options.Id = status.Id;
-            tmc.service.Retweet(options);
-            
-        }
-
-        public static String GetScreenNamePair(ListViewItem item)
-        {
-            TwitterStatus status = (TwitterStatus)item.Tag;
-            return (status.RetweetedStatus != null) ?
-               status.RetweetedStatus.User.ScreenName + " / " + status.RetweetedStatus.User.Name :
-               status.User.ScreenName + " / " + status.User.Name;
-        }
-
-        public static String GetRTScreenNamePair(ListViewItem item)
-        {
-            TwitterStatus status = (TwitterStatus)item.Tag;
-            return (status.RetweetedStatus != null) ?
-                status.User.ScreenName + " / " + status.User.Name : null;
+           TwitterStatus status = (TwitterStatus)item.Tag;
+           if (TwitterControllerClass.isUserProtected(status.User))
+           {
+               SystemSounds.Hand.Play();
+               return;
+           }
+           RetweetOptions options = new RetweetOptions();
+           options.Id = status.Id;
+           tmc.service.Retweet(options);
         }
 
         public static void SetMentionToTextBox(TextBox tb, ListViewItem item)
@@ -262,6 +274,13 @@ namespace trc2
         public static void SetUORTToTextBox(TextBox tb, ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
+            if( TwitterControllerClass.isUserProtected( status.User ))
+            {
+                DialogResult result = MessageBox.Show("鍵垢です。大丈夫ですか？","鍵垢非公式",
+                    MessageBoxButtons.OKCancel);
+                if( result != DialogResult.OK )
+                    return;
+            }
             tb.Tag = item;
             tb.Text = " RT @" + status.User.ScreenName + ":" + status.Text;
 
