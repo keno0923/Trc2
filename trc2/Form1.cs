@@ -7,7 +7,7 @@ using System.Windows.Documents;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
+using System.Text.RegularExpressions;
 using TweetSharp;
 using System.IO;
 using System.Net;
@@ -102,8 +102,6 @@ namespace trc2
                 Application.Exit();
             }
 
-//          WebClient wc = new WebClient();
-//          string str = wc.DownloadString("https://api.twitter.com/1.1/help/configuration.json");
 
 
             try
@@ -222,14 +220,26 @@ namespace trc2
 
         private void mentionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BufferedListView view = (BufferedListView)tabControl1.SelectedTab.Tag; 
+            BufferedListView view = (BufferedListView)tabControl1.SelectedTab.Tag;
+            if (view.SelectedItems.Count == 0) return;
             ListViewItem currentItem = view.SelectedItems[0];
             TwitterViewClass.SetMentionToTextBox(textBox1, currentItem);
         }
 
+        private void 全員へMentionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BufferedListView view = (BufferedListView)tabControl1.SelectedTab.Tag;
+            if (view.SelectedItems.Count == 0) return;
+            ListViewItem currentItem = view.SelectedItems[0];
+            TwitterViewClass.SetAllMentionToTextBox(textBox1, currentItem,ref tmc);
+        }
+
+
         private void listView1_KeyDown(object sender, KeyEventArgs e)
         {
             BufferedListView view = sender as BufferedListView;
+            if (view.SelectedItems.Count == 0) return;
+
             ListViewItem currentItem = view.SelectedItems[0];
             string currentName = TwitterViewClass.GetScreenName( currentItem );
             if (e.Control && e.KeyCode == Keys.Down)
@@ -270,6 +280,12 @@ namespace trc2
                 }
                 e.Handled = true;
             }
+            else if (e.Control && e.KeyCode == Keys.R)
+            {
+                if (MessageBox.Show("ReTweetしていいですか？", "確認", MessageBoxButtons.OKCancel)
+                    == DialogResult.OK)
+                    TwitterViewClass.OfficialReTweet(view.SelectedItems[0], ref tmc);
+            }
         }
         
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -285,7 +301,15 @@ namespace trc2
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             TextBox tb = sender as TextBox;
-            int Remain = 140 - tb.TextLength;
+            string text = tb.Text;
+
+            if (Regex.IsMatch(text, @"https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+"))
+            {
+               text = Regex.Replace(text, @"http://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+", "http xxxx xxxx xxxx xx");
+               text = Regex.Replace(text, @"https://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+", "httpsxxxx xxxx xxxx xxx");
+            }
+            
+            int Remain = 140 - text.Length;
             TextLengthLabel.Text = Remain.ToString();
         }
         
@@ -320,5 +344,11 @@ namespace trc2
             OAuth form = new OAuth();
             form.Show(this);
         }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
     }
 }

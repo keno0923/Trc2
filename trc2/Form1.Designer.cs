@@ -53,14 +53,14 @@
             this.ツールToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.デバグ１ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oAuth認証ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tweetTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.公式RTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mentionMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.全員へMentionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.非公式RTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mentionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.TextLengthLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.公式RTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -118,9 +118,9 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(0, 144);
@@ -163,12 +163,14 @@
             this.listView2.Location = new System.Drawing.Point(3, 3);
             this.listView2.MultiSelect = false;
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(739, 193);
+            this.listView2.Size = new System.Drawing.Size(739, 192);
             this.listView2.SmallImageList = this.iconList;
             this.listView2.Sorting = System.Windows.Forms.SortOrder.Descending;
             this.listView2.TabIndex = 1;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
+            this.listView2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listView1_KeyDown);
+            this.listView2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
             // 
             // columnHeader1
             // 
@@ -195,15 +197,15 @@
             this.panel1.Controls.Add(this.ScreenNameLabel);
             this.panel1.Controls.Add(this.UserImageBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 26);
+            this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(752, 112);
             this.panel1.TabIndex = 2;
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -260,7 +262,7 @@
             this.ScreenNameLabel.LinkColor = System.Drawing.Color.Black;
             this.ScreenNameLabel.Location = new System.Drawing.Point(65, 8);
             this.ScreenNameLabel.Name = "ScreenNameLabel";
-            this.ScreenNameLabel.Size = new System.Drawing.Size(302, 18);
+            this.ScreenNameLabel.Size = new System.Drawing.Size(532, 18);
             this.ScreenNameLabel.TabIndex = 1;
             this.ScreenNameLabel.TabStop = true;
             this.ScreenNameLabel.Text = "linkLabel1";
@@ -281,12 +283,16 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ツールToolStripMenuItem,
-            this.tweetTToolStripMenuItem});
+            this.mentionMToolStripMenuItem,
+            this.全員へMentionToolStripMenuItem,
+            this.公式RTToolStripMenuItem,
+            this.非公式RTToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(752, 26);
+            this.menuStrip1.Size = new System.Drawing.Size(752, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // ツールToolStripMenuItem
             // 
@@ -294,58 +300,48 @@
             this.デバグ１ToolStripMenuItem,
             this.oAuth認証ToolStripMenuItem});
             this.ツールToolStripMenuItem.Name = "ツールToolStripMenuItem";
-            this.ツールToolStripMenuItem.Size = new System.Drawing.Size(56, 22);
+            this.ツールToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.ツールToolStripMenuItem.Text = "ツール";
             // 
             // デバグ１ToolStripMenuItem
             // 
             this.デバグ１ToolStripMenuItem.Name = "デバグ１ToolStripMenuItem";
-            this.デバグ１ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.デバグ１ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.デバグ１ToolStripMenuItem.Text = "デバグ１";
             this.デバグ１ToolStripMenuItem.Click += new System.EventHandler(this.デバグ１ToolStripMenuItem_Click);
             // 
             // oAuth認証ToolStripMenuItem
             // 
             this.oAuth認証ToolStripMenuItem.Name = "oAuth認証ToolStripMenuItem";
-            this.oAuth認証ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.oAuth認証ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.oAuth認証ToolStripMenuItem.Text = "OAuth認証";
             this.oAuth認証ToolStripMenuItem.Click += new System.EventHandler(this.oAuth認証ToolStripMenuItem_Click);
             // 
-            // tweetTToolStripMenuItem
+            // mentionMToolStripMenuItem
             // 
-            this.tweetTToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.公式RTToolStripMenuItem,
-            this.非公式RTToolStripMenuItem,
-            this.mentionToolStripMenuItem});
-            this.tweetTToolStripMenuItem.Name = "tweetTToolStripMenuItem";
-            this.tweetTToolStripMenuItem.Size = new System.Drawing.Size(74, 22);
-            this.tweetTToolStripMenuItem.Text = "Tweet(&T)";
+            this.mentionMToolStripMenuItem.Name = "mentionMToolStripMenuItem";
+            this.mentionMToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
+            this.mentionMToolStripMenuItem.Text = "Mention(&M)";
+            this.mentionMToolStripMenuItem.Click += new System.EventHandler(this.mentionToolStripMenuItem_Click);
             // 
-            // 公式RTToolStripMenuItem
+            // 全員へMentionToolStripMenuItem
             // 
-            this.公式RTToolStripMenuItem.Name = "公式RTToolStripMenuItem";
-            this.公式RTToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.公式RTToolStripMenuItem.Text = "公式RT";
-            this.公式RTToolStripMenuItem.Click += new System.EventHandler(this.公式RTToolStripMenuItem_Click);
+            this.全員へMentionToolStripMenuItem.Name = "全員へMentionToolStripMenuItem";
+            this.全員へMentionToolStripMenuItem.Size = new System.Drawing.Size(99, 20);
+            this.全員へMentionToolStripMenuItem.Text = "全員へMention";
+            this.全員へMentionToolStripMenuItem.Click += new System.EventHandler(this.全員へMentionToolStripMenuItem_Click);
             // 
             // 非公式RTToolStripMenuItem
             // 
             this.非公式RTToolStripMenuItem.Name = "非公式RTToolStripMenuItem";
-            this.非公式RTToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.非公式RTToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.非公式RTToolStripMenuItem.Text = "非公式RT";
             this.非公式RTToolStripMenuItem.Click += new System.EventHandler(this.非公式RTToolStripMenuItem_Click);
             // 
-            // mentionToolStripMenuItem
-            // 
-            this.mentionToolStripMenuItem.Name = "mentionToolStripMenuItem";
-            this.mentionToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.mentionToolStripMenuItem.Text = "Mention";
-            this.mentionToolStripMenuItem.Click += new System.EventHandler(this.mentionToolStripMenuItem_Click);
-            // 
             // textBox1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(7, 374);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(703, 19);
@@ -367,6 +363,13 @@
             // 
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // 公式RTToolStripMenuItem
+            // 
+            this.公式RTToolStripMenuItem.Name = "公式RTToolStripMenuItem";
+            this.公式RTToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.公式RTToolStripMenuItem.Text = "公式RT";
+            this.公式RTToolStripMenuItem.Click += new System.EventHandler(this.公式RTToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -419,10 +422,6 @@
         private System.Windows.Forms.ToolStripMenuItem デバグ１ToolStripMenuItem;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label TextLengthLabel;
-        private System.Windows.Forms.ToolStripMenuItem tweetTToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 公式RTToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mentionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 非公式RTToolStripMenuItem;
         private BufferedListView listView2;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
@@ -430,6 +429,10 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem oAuth認証ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mentionMToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 全員へMentionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 非公式RTToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 公式RTToolStripMenuItem;
     }
 }
 

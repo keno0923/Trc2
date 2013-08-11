@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using TweetSharp;
 using System.Windows.Forms;
+using Hammock;
 
 namespace trc2
 {
     class TwitterModelClass
     {
         TwitterViewerForm parentForm = null;
+        public readonly int Url_http;
+        public readonly int Url_https;
 
         class CachedUserData
         {
@@ -91,6 +94,22 @@ namespace trc2
                 }
             }
             );
+
+            RestClient client = tws._client;
+            RestRequest req = tws.PrepareHammockQuery("help/configuration.json");
+            RestResponse res = client.Request(req);
+            Newtonsoft.Json.Linq.JContainer obj
+                = Newtonsoft.Json.JsonConvert.DeserializeObject(res.Content)
+                as Newtonsoft.Json.Linq.JContainer;
+
+            int uh, uhs;
+
+            int.TryParse(obj["short_url_length"].ToString(), out uh);
+            int.TryParse(obj["short_url_length_https"].ToString(), out uhs);
+
+            Url_http = uh;
+            Url_https = uhs;
+
         }
 
         public void RefreshCache()

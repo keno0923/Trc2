@@ -38,7 +38,7 @@ namespace trc2
                 item.ImageIndex = 1;
             else if (status.RetweetedStatus != null)
                 item.ImageIndex = 2;
-    
+
             if (!tmc.FollowerID.Contains(status.User.Id))
                 item.ForeColor = Color.Blue;
 
@@ -100,7 +100,7 @@ namespace trc2
             string str = GetTextWithReplacingURL(status);
             box.Text = str;
 
-            Stack<Tuple<int, string,string>> URLs = new Stack<Tuple<int,string,string>>();
+            Stack<Tuple<int, string, string>> URLs = new Stack<Tuple<int, string, string>>();
 
             foreach (TwitterUrl url in status.Entities.Urls)
             {
@@ -109,13 +109,14 @@ namespace trc2
 
                 if (index != -1)
                 {
-                    URLs.Push(new Tuple<int,string,string>(index, ht, url.Value));
+                    URLs.Push(new Tuple<int, string, string>(index, ht, url.Value));
                     box.Text = box.Text.Remove(index, ht.Length);
                 }
             }
 
-            while( URLs.Count != 0 ){
-                Tuple<int, string, string > url = URLs.Pop();
+            while (URLs.Count != 0)
+            {
+                Tuple<int, string, string> url = URLs.Pop();
                 box.InsertLink(url.Item2, url.Item3, url.Item1);
             }
 
@@ -130,18 +131,18 @@ namespace trc2
                     box.InsertLink(ht, index);
                 }
             }
-/*            foreach (TwitterHashTag tag in status.Entities.HashTags)
-            {
-                string ht = "#"+tag.Text;
-                int index = box.Text.IndexOf(ht);
+            /*            foreach (TwitterHashTag tag in status.Entities.HashTags)
+                        {
+                            string ht = "#"+tag.Text;
+                            int index = box.Text.IndexOf(ht);
 
-                if (index != -1)
-                {
-                    box.Text = box.Text.Remove(index, ht.Length);
-                    box.InsertLink(ht, "https://twitter.com/search?q="+ht, index);
-                }
-            }
-*/
+                            if (index != -1)
+                            {
+                                box.Text = box.Text.Remove(index, ht.Length);
+                                box.InsertLink(ht, "https://twitter.com/search?q="+ht, index);
+                            }
+                        }
+            */
         }
 
         private static string GetTextWithReplacingURL(TwitterStatus status)
@@ -154,14 +155,14 @@ namespace trc2
             return str;
         }
 
-        public static string GetToolTipDescription(ListViewItem item, ref TwitterModelClass tmc )
+        public static string GetToolTipDescription(ListViewItem item, ref TwitterModelClass tmc)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
             GetTweetOptions option = new GetTweetOptions();
             option.Id = status.InReplyToStatusId.Value;
             TwitterStatus repstatus = tmc.service.GetTweet(option);
 
-            string str = status.InReplyToScreenName + " says:\r\n" + 
+            string str = status.InReplyToScreenName + " says:\r\n" +
                 repstatus.TextDecoded;
 
             return str;
@@ -180,11 +181,14 @@ namespace trc2
         public static Bitmap GetRTImageFromListItem(ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
-            if(status.RetweetedStatus != null){
+            if (status.RetweetedStatus != null)
+            {
                 String RTImageURL = status.User.ProfileImageUrlHttps;
                 CacheBitmapFromURL(RTImageURL);
                 return cachedUserImage[RTImageURL];
-            }else{
+            }
+            else
+            {
                 return null;
             }
         }
@@ -246,20 +250,21 @@ namespace trc2
                status.RetweetedStatus.CreatedDate :
                status.CreatedDate;
 
-            return System.TimeZoneInfo.ConvertTimeFromUtc(time,TimeZoneInfo.Local);
+            return System.TimeZoneInfo.ConvertTimeFromUtc(time, TimeZoneInfo.Local);
         }
 
         public static void OfficialReTweet(ListViewItem item, ref TwitterModelClass tmc)
         {
-           TwitterStatus status = (TwitterStatus)item.Tag;
-           if (TwitterControllerClass.isUserProtected(status.User))
-           {
-               SystemSounds.Hand.Play();
-               return;
-           }
-           RetweetOptions options = new RetweetOptions();
-           options.Id = status.Id;
-           tmc.service.Retweet(options);
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            if( status.RetweetedStatus == null && TwitterControllerClass.isUserProtected(status.User))
+            {
+                SystemSounds.Hand.Play();
+                return;
+            }
+            RetweetOptions options = new RetweetOptions();
+            options.Id = status.Id;
+
+            tmc.service.Retweet(options);
         }
 
         public static void SetMentionToTextBox(TextBox tb, ListViewItem item)
@@ -270,15 +275,40 @@ namespace trc2
             tb.Focus();
             tb.Select(tb.TextLength, 0);
         }
- 
+
+        public static void SetAllMentionToTextBox(TextBox tb, ListViewItem item, ref TwitterModelClass tmc)
+        {
+            TwitterStatus status = (TwitterStatus)item.Tag;
+            tb.Tag = item;
+            tb.ResetText();
+
+            List<string> screenNameList = new List<string>();
+            screenNameList.Add(status.User.ScreenName);
+
+            foreach (TwitterMention tm in status.Entities.Mentions)
+            {
+                screenNameList.Add(tm.ScreenName);
+            }
+
+            string MySName = tmc.MySName;
+            screenNameList.RemoveAll((s => s == MySName));
+
+            foreach (string sname in screenNameList)
+            {
+                tb.Text = tb.Text + "@" + sname + " ";
+            }
+            tb.Focus();
+            tb.Select(tb.TextLength, 0);
+        }
+
         public static void SetUORTToTextBox(TextBox tb, ListViewItem item)
         {
             TwitterStatus status = (TwitterStatus)item.Tag;
-            if( TwitterControllerClass.isUserProtected( status.User ))
+            if (TwitterControllerClass.isUserProtected(status.User))
             {
-                DialogResult result = MessageBox.Show("鍵垢です。大丈夫ですか？","鍵垢非公式",
+                DialogResult result = MessageBox.Show("鍵垢です。大丈夫ですか？", "鍵垢非公式",
                     MessageBoxButtons.OKCancel);
-                if( result != DialogResult.OK )
+                if (result != DialogResult.OK)
                     return;
             }
             tb.Tag = item;
@@ -304,12 +334,12 @@ namespace trc2
                 TwitterStatus mentionedStatus = (TwitterStatus)((ListViewItem)tb.Tag).Tag;
                 options.InReplyToStatusId = mentionedStatus.Id;
             }
-   
+
             options.Status = tb.Text;
             tmc.service.SendTweet(options);
-            
+
             tb.Clear();
         }
- 
+
     }
 }
