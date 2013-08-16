@@ -318,6 +318,15 @@ namespace trc2
             tb.Select(0, 0);
         }
 
+        public static void openStatusPage(ListViewItem item)
+        {
+            TwitterStatus status = item.Tag as TwitterStatus;
+            string url = @"https://twitter.com/" + status.User.ScreenName +
+                         @"/status/" + status.IdStr;
+            System.Diagnostics.Process.Start(url);
+        }
+
+
         public static void Clear()
         {
             cachedUserImage.Clear();

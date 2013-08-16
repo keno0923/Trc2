@@ -350,5 +350,14 @@ namespace trc2
 
         }
 
+        private void tweetを開くToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BufferedListView view = (BufferedListView)tabControl1.SelectedTab.Tag;
+            if (view.SelectedItems.Count == 0) return;
+
+            ListViewItem currentItem = view.SelectedItems[0];
+            TwitterViewClass.openStatusPage(currentItem);
+        }
+
     }
 }

@@ -55,12 +55,13 @@
             this.oAuth認証ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mentionMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.全員へMentionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.公式RTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.非公式RTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.TextLengthLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.公式RTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tweetを開くToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -286,7 +287,8 @@
             this.mentionMToolStripMenuItem,
             this.全員へMentionToolStripMenuItem,
             this.公式RTToolStripMenuItem,
-            this.非公式RTToolStripMenuItem});
+            this.非公式RTToolStripMenuItem,
+            this.tweetを開くToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(752, 24);
@@ -331,6 +333,13 @@
             this.全員へMentionToolStripMenuItem.Text = "全員へMention";
             this.全員へMentionToolStripMenuItem.Click += new System.EventHandler(this.全員へMentionToolStripMenuItem_Click);
             // 
+            // 公式RTToolStripMenuItem
+            // 
+            this.公式RTToolStripMenuItem.Name = "公式RTToolStripMenuItem";
+            this.公式RTToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.公式RTToolStripMenuItem.Text = "公式RT";
+            this.公式RTToolStripMenuItem.Click += new System.EventHandler(this.公式RTToolStripMenuItem_Click);
+            // 
             // 非公式RTToolStripMenuItem
             // 
             this.非公式RTToolStripMenuItem.Name = "非公式RTToolStripMenuItem";
@@ -364,12 +373,12 @@
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // 公式RTToolStripMenuItem
+            // tweetを開くToolStripMenuItem
             // 
-            this.公式RTToolStripMenuItem.Name = "公式RTToolStripMenuItem";
-            this.公式RTToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.公式RTToolStripMenuItem.Text = "公式RT";
-            this.公式RTToolStripMenuItem.Click += new System.EventHandler(this.公式RTToolStripMenuItem_Click);
+            this.tweetを開くToolStripMenuItem.Name = "tweetを開くToolStripMenuItem";
+            this.tweetを開くToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.tweetを開くToolStripMenuItem.Text = "Tweetを開く";
+            this.tweetを開くToolStripMenuItem.Click += new System.EventHandler(this.tweetを開くToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -433,6 +442,7 @@
         private System.Windows.Forms.ToolStripMenuItem 全員へMentionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 非公式RTToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 公式RTToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tweetを開くToolStripMenuItem;
     }
 }
 
