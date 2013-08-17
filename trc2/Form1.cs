@@ -72,6 +72,7 @@ namespace trc2
         {
             tabControl1.TabPages[0].Tag = listView1;
             tabControl1.TabPages[1].Tag = listView2;
+            tabControl1.TabPages[2].Tag = listView3;
 
             StreamReader srApp = null;
 

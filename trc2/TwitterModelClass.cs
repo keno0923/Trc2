@@ -64,11 +64,6 @@ namespace trc2
 
             tws.StreamUser((streamEvent, response) =>
             {
-                parentForm.Invoke((MethodInvoker)delegate
-                {
-                    ((Form1)form).Timer1.Stop();
-                    ((Form1)form).Timer1.Start();
-                }); 
                 if (response.StatusCode == 0)
                 {
                     if (streamEvent is TwitterUserStreamStatus)
@@ -94,6 +89,16 @@ namespace trc2
                 }
             }
             );
+
+            tws.StreamFilter((streamEvent, response) =>
+            {
+                if (response.StatusCode == 0)
+                {
+                    new System.Media.SoundPlayer(@"C:\WINDOWS\Media\Windows Balloon.wav").Play();
+                }
+            }
+            );
+
 
             RestClient client = tws._client;
             RestRequest req = tws.PrepareHammockQuery("help/configuration.json");
