@@ -322,7 +322,7 @@ namespace trc2
         {
             TwitterStatus status = item.Tag as TwitterStatus;
             string url = @"https://twitter.com/" + status.User.ScreenName +
-                         @"/status/" + status.IdStr;
+                         @"/status/" + status.Id.ToString();
             System.Diagnostics.Process.Start(url);
         }
 

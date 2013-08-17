@@ -57,11 +57,11 @@
             this.全員へMentionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.公式RTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.非公式RTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tweetを開くToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.TextLengthLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tweetを開くToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -119,9 +119,9 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(0, 144);
@@ -198,15 +198,15 @@
             this.panel1.Controls.Add(this.ScreenNameLabel);
             this.panel1.Controls.Add(this.UserImageBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 24);
+            this.panel1.Location = new System.Drawing.Point(0, 26);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(752, 112);
             this.panel1.TabIndex = 2;
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -291,7 +291,7 @@
             this.tweetを開くToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(752, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(752, 26);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -302,55 +302,62 @@
             this.デバグ１ToolStripMenuItem,
             this.oAuth認証ToolStripMenuItem});
             this.ツールToolStripMenuItem.Name = "ツールToolStripMenuItem";
-            this.ツールToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.ツールToolStripMenuItem.Size = new System.Drawing.Size(56, 22);
             this.ツールToolStripMenuItem.Text = "ツール";
             // 
             // デバグ１ToolStripMenuItem
             // 
             this.デバグ１ToolStripMenuItem.Name = "デバグ１ToolStripMenuItem";
-            this.デバグ１ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.デバグ１ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.デバグ１ToolStripMenuItem.Text = "デバグ１";
             this.デバグ１ToolStripMenuItem.Click += new System.EventHandler(this.デバグ１ToolStripMenuItem_Click);
             // 
             // oAuth認証ToolStripMenuItem
             // 
             this.oAuth認証ToolStripMenuItem.Name = "oAuth認証ToolStripMenuItem";
-            this.oAuth認証ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.oAuth認証ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.oAuth認証ToolStripMenuItem.Text = "OAuth認証";
             this.oAuth認証ToolStripMenuItem.Click += new System.EventHandler(this.oAuth認証ToolStripMenuItem_Click);
             // 
             // mentionMToolStripMenuItem
             // 
             this.mentionMToolStripMenuItem.Name = "mentionMToolStripMenuItem";
-            this.mentionMToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
+            this.mentionMToolStripMenuItem.Size = new System.Drawing.Size(86, 22);
             this.mentionMToolStripMenuItem.Text = "Mention(&M)";
             this.mentionMToolStripMenuItem.Click += new System.EventHandler(this.mentionToolStripMenuItem_Click);
             // 
             // 全員へMentionToolStripMenuItem
             // 
             this.全員へMentionToolStripMenuItem.Name = "全員へMentionToolStripMenuItem";
-            this.全員へMentionToolStripMenuItem.Size = new System.Drawing.Size(99, 20);
+            this.全員へMentionToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.全員へMentionToolStripMenuItem.Text = "全員へMention";
             this.全員へMentionToolStripMenuItem.Click += new System.EventHandler(this.全員へMentionToolStripMenuItem_Click);
             // 
             // 公式RTToolStripMenuItem
             // 
             this.公式RTToolStripMenuItem.Name = "公式RTToolStripMenuItem";
-            this.公式RTToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.公式RTToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.公式RTToolStripMenuItem.Text = "公式RT";
             this.公式RTToolStripMenuItem.Click += new System.EventHandler(this.公式RTToolStripMenuItem_Click);
             // 
             // 非公式RTToolStripMenuItem
             // 
             this.非公式RTToolStripMenuItem.Name = "非公式RTToolStripMenuItem";
-            this.非公式RTToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.非公式RTToolStripMenuItem.Size = new System.Drawing.Size(72, 22);
             this.非公式RTToolStripMenuItem.Text = "非公式RT";
             this.非公式RTToolStripMenuItem.Click += new System.EventHandler(this.非公式RTToolStripMenuItem_Click);
             // 
+            // tweetを開くToolStripMenuItem
+            // 
+            this.tweetを開くToolStripMenuItem.Name = "tweetを開くToolStripMenuItem";
+            this.tweetを開くToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.tweetを開くToolStripMenuItem.Text = "Tweetを開く";
+            this.tweetを開くToolStripMenuItem.Click += new System.EventHandler(this.tweetを開くToolStripMenuItem_Click);
+            // 
             // textBox1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(7, 374);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(703, 19);
@@ -372,13 +379,6 @@
             // 
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // tweetを開くToolStripMenuItem
-            // 
-            this.tweetを開くToolStripMenuItem.Name = "tweetを開くToolStripMenuItem";
-            this.tweetを開くToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
-            this.tweetを開くToolStripMenuItem.Text = "Tweetを開く";
-            this.tweetを開くToolStripMenuItem.Click += new System.EventHandler(this.tweetを開くToolStripMenuItem_Click);
             // 
             // Form1
             // 
